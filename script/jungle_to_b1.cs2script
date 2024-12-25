@@ -1,0 +1,40 @@
+DEFINEPATH Horizon/src/modules/scheduler/mirage/jungle_to_b1
+LOCKMOUSE
+BEEP
+SRC slot3
+SLEEP 0.2 BEGIN
+SETANG setpos -1189.828491 -962.549011 -104.128754;setang 1.154999 82.157326 0.000000
+SRC +forward
+SRC +right
+SLEEP 0.6 BEGIN
+SRC -right
+SLEEP 1.38 BEGIN
+SRC -forward
+SRC +jump;-jump;
+SLEEP 0.4 BEGIN
+SRC +turnright
+SRC +right
+SLEEP 0.1 STRICT
+SRC -turnright
+SRC -right
+SRC +forward
+SLEEP 0.331 STRICT
+SRC slot2;slot1
+SRC +duck
+SRC +jump;-jump
+SRC -forward
+SRC +right
+SLEEP 0.1 STRICT
+SRC +turnright
+SLEEP 0.08 STRICT
+SRC -turnright
+SLEEP 0.1 STRICT
+SETBEGIN
+SRC -right
+UNLOCKMOUSE
+SLEEP 0.1 BEGIN
+SETANG setpos -944.033630 -503.746887 -30.968750;setang 10.056204 75.278900 0.000000
+SLEEP 0.5 BEGIN
+SRC -duck
+BEEP
+END
