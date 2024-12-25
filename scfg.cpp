@@ -8,8 +8,8 @@ double sen=2.2;
 double m_yaw=0.022;
 double m_pitch=0.022;
 double CVARSLEEP=0;
-// double tickrate=64;
-// double ticktime=1/tickrate;
+double tickrate=64;
+double ticktime=1/tickrate;
 double yawspeed=300;
 double pitchspeed=45;
 int N=0;
@@ -25,6 +25,15 @@ pair<double,double> lst(-1,-1);
 double tottime=0;
 
 void slp(double x,bool strict=0){
+    double L=floor(x*tickrate)/tickrate;
+    double R=ceil(x*tickrate)/tickrate;
+    if(fabs(x-L)<fabs(x-R)){
+        x=L;
+    }else{
+        x=R;
+    }
+    x-=0.5/tickrate;
+    x=max(x,0.0);
     tottime+=x;
     fout<<endl;
     if(strict){
@@ -35,7 +44,7 @@ void slp(double x,bool strict=0){
     fout<<format("alias syncer_callback \"exec {}/{}\"\n",path,++N);
     fout<<"syncer_schedule";
     fout=ofstream(format("Temp/{}.cfg",N),ios::out);
-    fout<<"//[Gen]\n\n";
+    fout<<"//[generated with scfg]\n\n";
 }
 
 void ang(double x,double y,bool needstd=1){
@@ -112,6 +121,26 @@ void turntoang(double x,double y){
     slp(ytime-xtime);
 
     src("-"+sy);
+}
+void checktime(){
+    src("move_begintime_to_yawsen");
+    src(format("incrementvar joy_yaw_sensitivity 0 99999999999 {:.6f}",tottime));
+    src("multvar joy_yaw_sensitivity -999999999 0 -1");
+    src("incrementvar joy_yaw_sensitivity -99999999 0 -100000.0");
+
+    src("syncer_fetch");
+    src("syncer_curtime | toggle \"hzScheduler_cmd;joy_pitch_sensitivity\"");
+    src("incrementvar joy_pitch_sensitivity -99999999 0 -100000.0");
+
+    src("setinfo -99999999999 =");
+    src("joy_yaw_sensitivity | toggle -99999999999");
+
+    src("-99999999999 | incrementvar joy_pitch_sensitivity");
+    src("incrementvar joy_pitch_sensitivity -99999999 99999999 200000.0");
+
+    src("setinfo timingError =");
+    src("joy_pitch_sensitivity | toggle timingError");
+    src("timingError | say");
 }
 
 void cvar(string cvarname,string value){
@@ -301,6 +330,7 @@ int main(int argc, char* argv[]) {
     keyword.insert("END");
     keyword.insert("SETBEGIN");
     keyword.insert("DEFINEPATH");
+    keyword.insert("CHECKTIME");
 
     for(auto& s:keyword){
         keywordbylen[s.size()].insert(s);
@@ -357,18 +387,13 @@ int main(int argc, char* argv[]) {
             RequireArg(opt,1,lineargs.size(),0);
             src(UnionWithSpace(lineargs));
         }else if(opt=="SLEEP"){
-            RequireArg(opt,2,lineargs.size(),1);
+            RequireArg(opt,1,lineargs.size(),1);
             isValidNumber(opt,lineargs[0]);
             double slptime=stod(lineargs[0]);
             if(slptime>3600){
                 cerr<<format("At line {}:\n---- warring: 'SLEEP {}' will pause over 1 hour. Are you sure?\n",lineid,slptime);
             }
-            if(lineargs[1]!="STRICT" && lineargs[1]!="BEGIN"){
-                cerr<<format("At line {}:\n---- error: Unknown '{}' flag for function 'SLEEP'. Expected 'STRICT' or 'BEGIN'\n",lineid,lineargs[1]);
-                deletefile();
-                exit(EXIT_FAILURE);
-            }
-            slp(slptime,lineargs[1]=="STRICT");
+            slp(slptime,0);
         }else if(opt=="SETANG"){
             use_ANG_after_MOVEANG=0;
             RequireArg(opt,7,lineargs.size(),1);
@@ -404,9 +429,13 @@ int main(int argc, char* argv[]) {
             tottime=0;
             RequireArg(opt,0,lineargs.size(),1);
             src("syncer_fetch;hzScheduler_begintime =;syncer_curtime | toggle hzScheduler_begintime");
+        }else if(opt=="CHECKTIME"){
+            RequireArg(opt,0,lineargs.size(),1);
+            checktime();
         }else if(opt=="END"){
             RequireArg(opt,0,lineargs.size(),1);
             fout<<"-syncer_nomsg_later"<<endl;
+            fout.close();
             cerr<<format("OK generate {} file{} successfully",N,N==1?"":"s")<<endl;
             copyfile();
             deletefile();
