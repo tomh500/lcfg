@@ -6,6 +6,7 @@ A lightweight tool to compile counter-strike 2 macro scripts into game-compatibl
 - `DEFINEPATH <exec-path>`: The path to the `exec` file.
 - `SRC <command>`: Directly execute a game command.
 - `SLEEP <duration>`: Sleep the script for a specified duration in seconds. The last parameter specifies whether the timing starts from the previous timing "start point". This helps reduce timing errors.
+- `SLEEPTICK <duration>`: Sleep the script for a specified duration in ticks. The last parameter specifies whether the timing starts from the previous timing "start point". This helps reduce timing errors.
 - `SETBEGIN`: Set the timing start point.
 - `CHECKTIME`：Output current timing errors.
 - `SETANG <output of the game’s getpos command>`: Reset and set the view angle to the target angle.

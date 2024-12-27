@@ -32,8 +32,8 @@ void slp(double x,bool strict=0){
     }else{
         x=R;
     }
-    x-=0.5/tickrate;
-    x=max(x,0.0);
+    // x-=0.5/tickrate;
+    // x=max(x,0.0);
     tottime+=x;
     fout<<endl;
     if(strict){
@@ -292,7 +292,8 @@ void genInit(){
 +syncer_nomsg
 syncer_fetch;hzScheduler_begintime =;syncer_curtime | toggle hzScheduler_begintime
 )";
-fout<<format("exec {}/0",path);
+    fout<<format("alias hzScheduler_launchpath exec {}/0\n",path);
+    fout<<format("hzScheduler_launch\n",path);
 }
 int main(int argc, char* argv[]) {
     deletefile();
@@ -319,6 +320,7 @@ int main(int argc, char* argv[]) {
     
     keyword.insert("SRC");
     keyword.insert("SLEEP");
+    keyword.insert("SLEEPTICK");
     keyword.insert("SETANG");
     keyword.insert("ANG");
     keyword.insert("MOVEANG");
@@ -358,6 +360,7 @@ int main(int argc, char* argv[]) {
                 if(it==keywordbylen[i].end())   continue;
                 cerr<<format("---- did you mean '{}'?",trys);
             }
+            deletefile();
             exit(EXIT_FAILURE);
         }
 
@@ -371,10 +374,10 @@ int main(int argc, char* argv[]) {
             RequireArg(opt,1,lineargs.size(),1);
             path=lineargs[0];
 
-            genInit();
 
             fout=ofstream("Temp/0.cfg",ios::out);
             fout<<"//[Gen]\n\n";
+            fout<<"alias hzScheduler_launch\n";
             slp(CVARSLEEP);
             continue;
         }
@@ -392,6 +395,14 @@ int main(int argc, char* argv[]) {
             double slptime=stod(lineargs[0]);
             if(slptime>3600){
                 cerr<<format("At line {}:\n---- warring: 'SLEEP {}' will pause over 1 hour. Are you sure?\n",lineid,slptime);
+            }
+            slp(slptime,0);
+        }else if(opt=="SLEEPTICK"){
+            RequireArg(opt,1,lineargs.size(),1);
+            isValidNumber(opt,lineargs[0]);
+            double slptime=stod(lineargs[0])/tickrate;
+            if(slptime>3600){
+                cerr<<format("At line {}:\n---- warring: 'SLEEPTICK {}' will pause over 1 hour. Are you sure?\n",lineid,slptime);
             }
             slp(slptime,0);
         }else if(opt=="SETANG"){
@@ -435,12 +446,14 @@ int main(int argc, char* argv[]) {
         }else if(opt=="END"){
             RequireArg(opt,0,lineargs.size(),1);
             fout<<"-syncer_nomsg_later"<<endl;
-            fout.close();
+            fout<<"alias hzScheduler_launch hzScheduler_launchpath"<<endl;
             cerr<<format("OK generate {} file{} successfully",N,N==1?"":"s")<<endl;
+            genInit();
+            fout.close();
             copyfile();
             deletefile();
-            exit(EXIT_SUCCESS);
+            exit(0);
         }
     }
-    exit(EXIT_SUCCESS);
+    exit(0);
 }
