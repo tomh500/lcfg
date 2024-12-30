@@ -7,7 +7,7 @@ A lightweight compiler for compiling Horizon cs2script scripts into .cfg files.
 
 # scfg Commands
 
-- `DEFINEPATH <exec path>`: **This is not a command**. It should be used at the beginning to specify the path used by the `exec` command, which is also the actual location of your cfg file.
+- `DEFINEPATH <exec path>`: Used at the beginning to specify the path used by the `exec` command, which is also the actual location of your cfg file.
 - `TICK(seconds)`: **This is not a command**. It can be used as a parameter for any command to convert the internal time unit from seconds to ticks.
 
 - `SRC <command>`: Directly call an in-game command.
@@ -54,7 +54,16 @@ A lightweight compiler for compiling Horizon cs2script scripts into .cfg files.
 - `SLOT3`: Switches to the melee weapon.
 - `SLOT4`: Switches to the throwable item.
 - `SLOT5`: Switches to C4.
+- `NADE_HE`: Switches to the high explosive grenade.
+- `NADE_SMOKE`: Switches to the smoke grenade.
+- `NADE_FLASH`: Switches to the flashbang.
+- `NADE_DECOY`: Switches to the decoy grenade.
+- `NADE_MOLO`: Switches to the molotov cocktail / firebomb.
 
+- `SAY_ALL <text>`: Sends a global message.
+- `SAY_TEAM <text>`: Sends a team message.
+- `SAY_CONSOLE <text>`: Sends a console message.
+  
 - `FPS_LOW`: Locks the fps to 64.
 - `FPS_RESET`: Resets to the frame rate limit specified in the optPreference.
 

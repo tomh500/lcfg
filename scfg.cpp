@@ -477,6 +477,16 @@ int main(int argc, char *argv[])
     keyword.insert("SLOT4");
     keyword.insert("SLOT5");
 
+    keyword.insert("NADE_HE");
+    keyword.insert("NADE_SMOKE");
+    keyword.insert("NADE_MOLO");
+    keyword.insert("NADE_FLASH");
+    keyword.insert("NADE_DECOY");
+
+    keyword.insert("SAY_ALL");
+    keyword.insert("SAY_TEAM");
+    keyword.insert("SAY_CONSOLE");
+
     keyword.insert("JUMP");
     keyword.insert("JUMPBUG");
     keyword.insert("SPEED_LEFT");
@@ -691,11 +701,11 @@ int main(int argc, char *argv[])
             {
                 if (yawstatus < 0)
                 {
-                    src(format("turnleft -{:6f} 0 0;-left", -fabs(yawstatus)));
+                    src(format("turnleft -{:6f} 0 0;-left", fabs(yawstatus)));
                 }
                 else
                 {
-                    src(format("turnright -{:6f} 0 0;-right", -fabs(yawstatus)));
+                    src(format("turnright -{:6f} 0 0;-right", fabs(yawstatus)));
                 }
                 yawstatus = 0;
             }
@@ -738,32 +748,74 @@ int main(int argc, char *argv[])
         else if (opt == "DROP")
         {
             RequireArg(opt, 0, lineargs.size(), 1);
-            src("drop");
+            src("+hzBind_drop;-hzBind_drop");
         }
         else if (opt == "SLOT1")
         {
             RequireArg(opt, 0, lineargs.size(), 1);
-            src("slot1");
+            src("+hzBind_wp1;-hzBind_wp1");
         }
         else if (opt == "SLOT2")
         {
             RequireArg(opt, 0, lineargs.size(), 1);
-            src("slot2");
+            src("+hzBind_wp2;-hzBind_wp2");
         }
         else if (opt == "SLOT3")
         {
             RequireArg(opt, 0, lineargs.size(), 1);
-            src("slot3");
+            src("+hzBind_wp3;-hzBind_wp3");
         }
         else if (opt == "SLOT4")
         {
             RequireArg(opt, 0, lineargs.size(), 1);
-            src("slot4");
+            src("+hzBind_wp4;-hzBind_wp4");
         }
         else if (opt == "SLOT5")
         {
             RequireArg(opt, 0, lineargs.size(), 1);
-            src("slot5");
+            src("+hzBind_wp5;-hzBind_wp5");
+        }
+        else if (opt.substr(0, 5) == "NADE_")
+        {
+            RequireArg(opt, 0, lineargs.size(), 1);
+            if (opt == "NADE_HE")
+            {
+                src("+hzBind_HE;+hzBind_HE");
+            }
+            else if (opt == "NADE_SMOKE")
+            {
+                src("+hzBind_smoke;+hzBind_smoke");
+            }
+            else if (opt == "NADE_MOLO")
+            {
+                src("+hzBind_molo;+hzBind_molo");
+            }
+            else if (opt == "NADE_FLASH")
+            {
+                src("+hzBind_flash;+hzBind_flash");
+            }
+            else if (opt == "NADE_DECOY")
+            {
+                src("+hzBind_decoy;+hzBind_decoy");
+            }
+        }
+        else if (opt.substr(0, 4) == "SAY_")
+        {
+            RequireArg(opt, 1, lineargs.size(), 0);
+            string cmd;
+            if (opt == "SAY_ALL")
+            {
+                cmd = "say";
+            }
+            else if (opt == "SAY_TEAM")
+            {
+                cmd = "say_team";
+            }
+            else if (opt == "SAY_CONSOLE")
+            {
+                cmd = "echoln";
+            }
+            src(format("{} {}", cmd, UnionWithSpace(lineargs)));
         }
         else if (opt == "END")
         {

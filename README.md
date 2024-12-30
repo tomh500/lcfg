@@ -54,6 +54,15 @@
 - `SLOT3`：切换至近战武器
 - `SLOT4`：切换至投掷物
 - `SLOT5`：切换至C4
+- `NADE_HE`：切换至高爆手雷
+- `NADE_SMOKE`：切换至烟雾弹
+- `NADE_FLASH`：切换至闪光弹
+- `NADE_DECOY`：切换至诱饵弹
+- `NADE_MOLO`：切换至燃烧弹 / 燃烧瓶
+
+- `SAY_ALL <文本>`：全局发送消息
+- `SAY_TEAM <文本>`：队内发送消息
+- `SAY_CONSOLE <文本>`：控制台发送消息
   
 - `FPS_LOW`：锁定 fps 至 64。
 - `FPS_RESET`：恢复至 optPreference 中指定的帧率限制。
