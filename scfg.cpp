@@ -14,6 +14,7 @@ double tickrate = 64;
 double ticktime = 1 / tickrate;
 double yawspeed = 300;
 double pitchspeed = 45;
+double usedtime = 0;
 int N = 0;
 int lineid;
 
@@ -168,11 +169,7 @@ string ensure_extension(const string &filename)
 void genInit()
 {
     fout = ofstream("Temp/run.cfg", ios::out);
-    fout << "//[Gen]";
-    fout << R"(
-+syncer_nomsg
-syncer_fetch;hzScheduler_begintime =;syncer_curtime | toggle hzScheduler_begintime
-)";
+    fout << "//[Gen]\n";
     fout << format("alias hzScheduler_launchpath exec {}/0\n", path);
     fout << format("hzScheduler_launch\n", path);
 }
@@ -263,6 +260,7 @@ void slp(double x, bool strict = 0)
     // x-=0.5/tickrate;
     // x=max(x,0.0);
     tottime += x;
+    usedtime += x;
     fout << endl;
     if (strict)
     {
@@ -360,8 +358,8 @@ void turntoang(double usetime, double x, double y)
         genfailed();
     }
 
-    src(format("+{} {:6f} 0 0", sx, yawspd_need / yawspeed));
-    src(format("+{} {:6f} 0 0", sy, pitchspd_need / pitchspeed));
+    src(format("{} {:6f} 0 0", sx, yawspd_need / yawspeed));
+    src(format("{} {:6f} 0 0", sy, pitchspd_need / pitchspeed));
 
     slp(usetime);
 
@@ -436,6 +434,7 @@ int main(int argc, char *argv[])
     keyword.insert("SLEEP");
     keyword.insert("SLEEPTICK");
     keyword.insert("SETANG");
+    keyword.insert("SETFAKEANG");
     keyword.insert("ANG");
     keyword.insert("MOVEANG");
     keyword.insert("PLAY");
@@ -493,6 +492,8 @@ int main(int argc, char *argv[])
     keyword.insert("SPEED_RIGHT");
     keyword.insert("SPEED_STOP");
 
+    keyword.insert("WASD_CAN_CANCEL");
+
     for (auto &s : keyword)
     {
         keywordbylen[s.size()].insert(s);
@@ -543,6 +544,9 @@ int main(int argc, char *argv[])
 
             fout = ofstream("Temp/0.cfg", ios::out);
             fout << "//[Gen]\n\n";
+            fout << "+syncer_nomsg\n";
+            fout << "hzSchduler_taskbegin\n";
+            fout << "syncer_fetch;hzScheduler_begintime =;syncer_curtime | toggle hzScheduler_begintime\n";
             fout << "alias hzScheduler_launch\n";
             slp(CVARSLEEP);
             continue;
@@ -556,6 +560,11 @@ int main(int argc, char *argv[])
         {
             RequireArg(opt, 1, lineargs.size(), 0);
             src(UnionWithSpace(lineargs));
+        }
+        else if (opt == "WASD_CAN_CANCEL")
+        {
+            RequireArg(opt, 0, lineargs.size(), 0);
+            src("hzSchduler_canceltask_wasd_enable");
         }
         else if (opt == "SLEEP")
         {
@@ -573,7 +582,7 @@ int main(int argc, char *argv[])
             RequireArg(opt, 1, lineargs.size(), 1);
             isValidNumber(opt, lineargs[0]);
             double slptime = stod(lineargs[0]) / tickrate;
-            cerr << format("At line {}:\n---- warring: 'SLEEPTICK' will soon been no longer supported, use 'SLEEP TICK(ticknum) instead!'\n", lineid, slptime);
+            // cerr << format("At line {}:\n---- warring: 'SLEEPTICK' will soon been no longer supported, use 'SLEEP TICK(ticknum) instead!'\n", lineid, slptime);
             if (slptime > 3600)
             {
                 cerr << format("At line {}:\n---- warring: 'SLEEPTICK {}' will pause over 1 hour. Are you sure?\n", lineid, slptime);
@@ -585,6 +594,11 @@ int main(int argc, char *argv[])
             use_ANG_after_MOVEANG = 0;
             RequireArg(opt, 7, lineargs.size(), 1);
             setang(stod(lineargs[5]), stod(lineargs[4]));
+        }
+        else if (opt == "SETFAKEANG")
+        {
+            RequireArg(opt, 7, lineargs.size(), 1);
+            lst = {stod(lineargs[5]), stod(lineargs[4])};
         }
         else if (opt == "ANG")
         {
@@ -838,8 +852,9 @@ int main(int argc, char *argv[])
             }
 
             fout << "-syncer_nomsg_later" << endl;
+            fout << "hzSchduler_taskend" << endl;
             fout << "alias hzScheduler_launch hzScheduler_launchpath" << endl;
-            cerr << format("OK generate {} file{} successfully", N, N == 1 ? "" : "s") << endl;
+            cerr << format("OK generate {} file{} successfully ({} seconds) ({} ticks)", N, N == 1 ? "" : "s", usedtime, usedtime / ticktime) << endl;
             genInit();
             fout.close();
             copyfile();
