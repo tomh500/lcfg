@@ -564,7 +564,7 @@ int main(int argc, char *argv[])
         else if (opt == "WASD_CAN_CANCEL")
         {
             RequireArg(opt, 0, lineargs.size(), 0);
-            src("hzSchduler_canceltask_wasd_enable");
+            src("hzSchduler_canceltask_enable");
         }
         else if (opt == "SLEEP")
         {
