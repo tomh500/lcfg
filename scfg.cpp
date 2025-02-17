@@ -264,11 +264,11 @@ void slp(double x, bool strict = 0)
     fout << endl;
     if (strict)
     {
-        fout << format("alias syncerReg_delay \"incrementvar joy_yaw_sensitivity 0 99999999999999 {:.6f}\"\n", x);
+        fout << format("alias syncerReg_delay \"incrementvar tv_window_size 0 99999999999999 {:.6f}\"\n", x);
     }
     else
     {
-        fout << format("alias syncerReg_delay \"move_begintime_to_yawsen;incrementvar joy_yaw_sensitivity 0 99999999999999 {:.6f}\"\n", tottime);
+        fout << format("alias syncerReg_delay \"move_begintime_to_yawsen;incrementvar tv_window_size 0 99999999999999 {:.6f}\"\n", tottime);
     }
     fout << format("alias syncer_callback \"exec {}/{}\"\n", path, ++N);
     fout << "syncer_schedule";
@@ -369,22 +369,22 @@ void turntoang(double usetime, double x, double y)
 void checktime()
 {
     src("move_begintime_to_yawsen");
-    src(format("incrementvar joy_yaw_sensitivity 0 99999999999 {:.6f}", tottime));
-    src("multvar joy_yaw_sensitivity -999999999 0 -1");
-    src("incrementvar joy_yaw_sensitivity -99999999 0 -100000.0");
+    src(format("incrementvar tv_window_size 0 99999999999 {:.6f}", tottime));
+    src("multvar tv_window_size -999999999 0 -1");
+    src("incrementvar tv_window_size -99999999 0 -100000.0");
 
     src("syncer_fetch");
-    src("syncer_curtime | toggle \"hzScheduler_cmd;joy_pitch_sensitivity\"");
-    src("incrementvar joy_pitch_sensitivity -99999999 0 -100000.0");
+    src("syncer_curtime | toggle \"hzScheduler_cmd;tv_playcast_retry_timeout\"");
+    src("incrementvar tv_playcast_retry_timeout -99999999 0 -100000.0");
 
     src("setinfo -99999999999 =");
-    src("joy_yaw_sensitivity | toggle -99999999999");
+    src("tv_window_size | toggle -99999999999");
 
-    src("-99999999999 | incrementvar joy_pitch_sensitivity");
-    src("incrementvar joy_pitch_sensitivity -99999999 99999999 200000.0");
+    src("-99999999999 | incrementvar tv_playcast_retry_timeout");
+    src("incrementvar tv_playcast_retry_timeout -99999999 99999999 200000.0");
 
     src("setinfo timingError =");
-    src("joy_pitch_sensitivity | toggle timingError");
+    src("tv_playcast_retry_timeout | toggle timingError");
     src("timingError | say");
 }
 
