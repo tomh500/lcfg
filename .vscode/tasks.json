@@ -1,0 +1,43 @@
+{
+    "version": "2.0.0",
+    "tasks":[
+        {
+            "label": "build-cpp",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "${file}",
+                "-o",
+                "${fileBasenameNoExtension}.exe",
+                "-std=c++23",
+                "-O3"
+            ],
+            "problemMatcher":[]
+        },
+        {
+            "label": "build-scfg",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "${workspaceFolder}/src/scfg.cpp",
+                "-o",
+                "${workspaceFolder}/scfg.exe",
+                "-std=c++23",
+                "-O3"
+            ],
+            "problemMatcher":[]
+        },
+        {
+            "label": "run-cpp",
+            "type": "shell",
+            "command": "./${fileBasenameNoExtension}.exe test.scfg",
+            "problemMatcher":[]
+        },
+        {
+            "label": "echohelloworld",
+            "type": "shell",
+            "command": "echo helloworld",
+            "problemMatcher":[]
+        }
+    ]
+}

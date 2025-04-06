@@ -1,0 +1,38 @@
+import std.scfg
+
+using fps_max 64
+
+def forward_and_jump{
+    forward.keep(1000){
+        // "+forward" will be added here by scfg automatically
+
+        say("yes you can sleep inside here, but must less than 1000ms")
+        
+        // error ↓
+        // sleep(10000t)
+
+        sleep(500)
+
+        echo("uhh 500ms")
+
+        //even keep inside keep!
+
+        right.keep(300){
+
+        }
+
+        // "sleep(500)" and "-forward" will be added here by scfg automatically
+    }
+    
+    jump
+
+    loop(50){
+        loop(2){
+            sleep(1t)
+        }
+    }
+}
+
+def main{
+    forward_and_jump
+}
