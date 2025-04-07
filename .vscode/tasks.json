@@ -8,10 +8,17 @@
             "args": [
                 "${file}",
                 "-o",
-                "${fileBasenameNoExtension}.exe",
+                "${fileDirname}/${fileBasenameNoExtension}.exe",
                 "-std=c++23",
                 "-O3"
             ],
+            "problemMatcher":[]
+        },
+        {
+            "label": "run-all",
+            "type": "shell",
+            "command": "${workspaceFolder}/run.bat",
+            "args": [],
             "problemMatcher":[]
         },
         {
@@ -19,7 +26,7 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "${workspaceFolder}/src/scfg.cpp",
+                "${workspaceFolder}/src/compiler/scfg.cpp",
                 "-o",
                 "${workspaceFolder}/scfg.exe",
                 "-std=c++23",
@@ -28,9 +35,15 @@
             "problemMatcher":[]
         },
         {
+            "label": "run-scfg",
+            "type": "shell",
+            "command": "${workspaceFolder}/scfg.exe test.scfg",
+            "problemMatcher":[]
+        },
+        {
             "label": "run-cpp",
             "type": "shell",
-            "command": "./${fileBasenameNoExtension}.exe test.scfg",
+            "command": "${fileDirname}/${fileBasenameNoExtension}.exe",
             "problemMatcher":[]
         },
         {
