@@ -1,0 +1,27 @@
+
+
+
+/*
+def smth
+{
+    say(hi come here);
+    sleep(2000);
+    say(end s\{hi\}leep);
+}*/
+
+def forward_and_jump{
+    forward(1000)
+    when-do forward(5000) smth;
+    
+    jump;
+
+    loop(50){
+        loop(2){;
+            sleep(1t);
+        }
+    }
+}
+
+def main{
+    forward_and_jump
+}
