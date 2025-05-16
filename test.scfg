@@ -1,0 +1,7 @@
+print("hi")
+forward(1)
+-- sleep(100,"s")
+forward(-1)
+-- turnleft(100,30)
+forward()
+jump()
