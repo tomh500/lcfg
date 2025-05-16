@@ -1,11 +1,15 @@
 #include "cmd/baseCommand.hpp"
 #include "cmd/sleep/sleepCommand.hpp"
+#include "cmd/src/srcCommand.hpp"
+#include "cmd/setExecPath/setExecPathCommand.hpp"
 #include "utils.hpp"
 
 void registerLuaFunctions(lua_State *L)
 {
     registerLuaBaseFunctions(L);
     registerLuaSleepFunction(L);
+    registerLuaSrcFunction(L);
+    registerLuaSetExecPathFunction(L);
 }
 
 int main(int argc, char *argv[])
@@ -44,6 +48,9 @@ int main(int argc, char *argv[])
 
     // check
     log(format("ok process scfg file. end with current tick={}.",event.time()));
+
+    //generate
+    event.generate(fs::current_path()/"gen"/fs::path(argv[1]).stem());
 
     // 清理
     lua_close(L);

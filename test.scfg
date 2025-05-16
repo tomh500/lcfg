@@ -1,11 +1,7 @@
-print("hi")
-forward(1)
--- sleep(100,"s")
-forward(-1)
--- turnleft(100,30)
-forward()
-jump()
+-- setExecPath("")
 for i=1,10 do
-    forward(1)
+    src("+forward")
+    sleep(5)
+    src("-forward")
+    sleep(5)
 end
-forward(1);
