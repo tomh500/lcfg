@@ -2,6 +2,8 @@
 #include "cmd/sleep/sleepCommand.hpp"
 #include "cmd/src/srcCommand.hpp"
 #include "cmd/setExecPath/setExecPathCommand.hpp"
+#include "cmd/jump/jumpCommand.hpp"
+#include "cmd/jumpbug/jumpbugCommand.hpp"
 #include "utils.hpp"
 
 void registerLuaFunctions(lua_State *L)
@@ -10,8 +12,18 @@ void registerLuaFunctions(lua_State *L)
     registerLuaSleepFunction(L);
     registerLuaSrcFunction(L);
     registerLuaSetExecPathFunction(L);
+    registerLuaJumpFunction(L);
+    registerLuaJumpbugFunction(L);
 }
 
+void warning_func(void *ud, const char *msg, int tocont)
+{
+    if (!tocont)
+        std::cerr << "[Lua warning] ";
+    std::cerr << msg;
+    if (!tocont)
+        std::cerr << std::endl;
+}
 int main(int argc, char *argv[])
 {
     if (argc < 2)
@@ -21,10 +33,12 @@ int main(int argc, char *argv[])
     }
 
     const char *scriptPath = argv[1];
-    // 打开输出文件
+    log("scfg is running.");
 
     // 创建新的 Lua 状态
     lua_State *L = luaL_newstate();
+    lua_setwarnf(L, warning_func, nullptr);
+
     if (L == nullptr)
     {
         cerr << "Failed to create Lua state." << endl;
@@ -47,10 +61,10 @@ int main(int argc, char *argv[])
     }
 
     // check
-    log(format("ok process scfg file. end with current tick={}.",event.time()));
+    log(format("ok process scfg file. end with current tick={}.", event.time()));
 
-    //generate
-    event.generate(fs::current_path()/"gen"/fs::path(argv[1]).stem());
+    // generate
+    event.generate(fs::current_path() / fs::path(argv[1]).stem(), L);
 
     // 清理
     lua_close(L);

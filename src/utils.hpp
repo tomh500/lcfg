@@ -26,7 +26,7 @@ void log(const string &s)
 
 // 定义
 const int TICKRATE = 64;
-const size_t LENLIMIT = 256;
+const size_t LENLIMIT = 128;
 const size_t LINELIMIT = 300;
 
 string genList(const string &name, const vector<string> &ls)
@@ -77,14 +77,32 @@ class eventList
                 fout << format("exec {}", (exec / nxtpage).string());
             fout = ofstream((root / nxtpage).string(), ios::out);
         }
+        void remove_cmd_files(const fs::path &root)
+        {
+            if (!fs::exists(root) || !fs::is_directory(root))
+                return;
+
+            std::regex pattern(R"(cmd_\d+\.cfg)");
+
+            for (const auto &entry : fs::directory_iterator(root))
+            {
+                if (fs::is_regular_file(entry.status()))
+                {
+                    const std::string filename = entry.path().filename().string();
+                    if (std::regex_match(filename, pattern))
+                    {
+                        fs::remove(entry.path());
+                    }
+                }
+            }
+        }
 
     public:
         void init(fs::path workspace, fs::path execpath)
         {
             root = workspace;
             exec = execpath;
-            if (fs::exists(root))
-                fs::remove_all(root);
+            remove_cmd_files(root);
             fs::create_directories(root);
             log("workspace: " + root.string());
             N = 0;
@@ -104,56 +122,70 @@ class eventList
         const string ticker = "hzSche_t";
         string cur;
         int idN;
-        Gen* gen;
+        Gen *gen;
+
     public:
-        void newalias(bool secon=true){
+        void newalias(bool secon = true)
+        {
             idN++;
-            if(idN>1){
-                if(secon)   cur+=";";
-                cur+=format("{}{}\"",seq_pre,idN);
+            if (idN > 1)
+            {
+                if (secon)
+                    cur += ";";
+                cur += format("{}{}\"", seq_pre, idN);
                 gen->append(cur);
             }
-            cur=format("alias {}{} \"",seq_pre,idN);
+            cur = format("alias {}{} \"", seq_pre, idN);
         }
-        void init(Gen* ptr)
+        void init(Gen *ptr)
         {
-            gen=ptr;
-            idN=0;
-            cur="";
+            gen = ptr;
+            idN = 0;
+            cur = "";
             newalias();
         }
-        void append(const string& s)
+        void append(const string &s)
         {
-            string apd="";
-            if(cur.back()!='"') apd+=";";
-            apd+=s;
-            if(cur.size()+apd.size()+1>LENLIMIT){
+            string apd = "";
+            if (cur.back() != '"')
+                apd += ";";
+            apd += s;
+            if (cur.size() + apd.size() + 1 > LENLIMIT)
+            {
                 newalias();
-                cur+=s;
-            }else{
-                cur+=apd;
+                cur += s;
+            }
+            else
+            {
+                cur += apd;
             }
         }
         void sleep(int tick)
         {
-            if(cur.back()!='"') cur+=";";
-            for(int i=1;i<=tick;i++){
-                cur+=format("alias {} ",ticker);
-                if(cur.size()>=LENLIMIT)    newalias(false);
+            if (cur.back() != '"')
+                cur += ";";
+            for (int i = 1; i <= tick; i++)
+            {
+                cur += format("alias {} ", ticker);
+                if (cur.size() >= LENLIMIT)
+                    newalias(false);
             }
-            if(cur.back()!='"') newalias(false);
+            if (cur.back() != '"')
+                newalias(false);
         }
-        void end(){
-            cur+='"';
+        void end()
+        {
+            cur += '"';
             gen->append(cur);
         }
     } aliaschain;
 
 public:
-    eventList():execpath("tmpdir"),execpath_set(false){}
-    void setExecPath(const string &s){
-        execpath_set=1;
-        execpath=fs::path(s);
+    eventList() : execpath("tmpdir"), execpath_set(false) {}
+    void setExecPath(const string &s)
+    {
+        execpath_set = 1;
+        execpath = fs::path(s);
     }
     void sleep(int tick)
     {
@@ -167,12 +199,19 @@ public:
     {
         return curT;
     }
-    void generate(fs::path workspace)
+    bool getExecPath_set() const
     {
-        gen.init(workspace,execpath);
+        return execpath_set;
+    }
+    void generate(fs::path workspace, lua_State *L)
+    {
+        if (!execpath_set)
+            lua_warning(L, "exec path has not been set! Are you sure?", 0);
+        gen.init(workspace, execpath);
         const string pkg_pre = "hzSche_pkg_";
         int idN = 0;
         // split command blocks into ids
+        ls[ls.rbegin()->first+1].push_back("hzSche_stop_t");
         for (auto &[t, cmdls] : ls)
         {
             vector<string> idls;
@@ -202,11 +241,13 @@ public:
         aliaschain.init(&gen);
         for (auto it = ls.begin(); it != ls.end(); it++)
         {
-            for(auto &s:it->second){
+            for (auto &s : it->second)
+            {
                 aliaschain.append(s);
             }
-            if(next(it)!=ls.end()){
-                aliaschain.sleep(next(it)->first-it->first);
+            if (next(it) != ls.end())
+            {
+                aliaschain.sleep(next(it)->first - it->first);
             }
         }
         aliaschain.end();

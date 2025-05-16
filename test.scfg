@@ -1,5 +1,5 @@
--- setExecPath("")
-for i=1,10 do
+setExecPath("Horizon/src")
+for i=1,100 do
     src("+forward")
     sleep(5)
     src("-forward")

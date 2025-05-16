@@ -26,8 +26,7 @@
     X(attack)\
     X(attack2)\
     X(sprint)\
-    X(lookatweapon)\
-    X(jump)
+    X(lookatweapon)
 
 #define X(cmd) baseCommandFunction(cmd)
 baseCommandList
