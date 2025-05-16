@@ -1,6 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
-#include "utils.hpp"
+#include "../utils.hpp"
 
 // clang-format off
 // Base Command Register

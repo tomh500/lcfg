@@ -2,6 +2,7 @@
 #define SCFG_UTILS
 
 #include <bits/stdc++.h>
+#include <lua.hpp>
 using namespace std;
 
 string getCurrentTimeString()
@@ -36,6 +37,11 @@ public:
     {
         ls[curT].push_back(s);
     }
+    int time(){
+        return curT;
+    }
 } event;
+
+const int TICKRATE=64;
 
 #endif

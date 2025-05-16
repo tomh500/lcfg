@@ -5,3 +5,7 @@ forward(-1)
 -- turnleft(100,30)
 forward()
 jump()
+for i=1,10 do
+    forward(1)
+end
+forward(1);
