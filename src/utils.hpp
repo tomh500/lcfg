@@ -25,9 +25,16 @@ void log(const string &s)
 }
 
 // 定义
+const double sensitivity = 2.2;
+const double m_yaw = 0.022;
+const double m_pitch = 0.022;
 const int TICKRATE = 64;
 const size_t LENLIMIT = 128;
 const size_t LINELIMIT = 300;
+const double max_yaw_speed = 300;
+const double max_pitch_speed = 45;
+
+lua_State* luaL;
 
 string genList(const string &name, const vector<string> &ls)
 {
@@ -210,8 +217,10 @@ public:
         gen.init(workspace, execpath);
         const string pkg_pre = "hzSche_pkg_";
         int idN = 0;
+
+        //add hz_stop
+        ls[ls.rbegin()->first + 1].push_back("hzSche_stop_t");
         // split command blocks into ids
-        ls[ls.rbegin()->first+1].push_back("hzSche_stop_t");
         for (auto &[t, cmdls] : ls)
         {
             vector<string> idls;

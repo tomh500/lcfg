@@ -4,6 +4,9 @@
 #include "cmd/setExecPath/setExecPathCommand.hpp"
 #include "cmd/jump/jumpCommand.hpp"
 #include "cmd/jumpbug/jumpbugCommand.hpp"
+#include "cmd/angle/setAngle.hpp"
+#include "cmd/angle/angle.hpp"
+#include "cmd/angle/moveAngle.hpp"
 #include "utils.hpp"
 
 void registerLuaFunctions(lua_State *L)
@@ -14,6 +17,9 @@ void registerLuaFunctions(lua_State *L)
     registerLuaSetExecPathFunction(L);
     registerLuaJumpFunction(L);
     registerLuaJumpbugFunction(L);
+    registerLuaSetAngleFunction(L);
+    registerLuaAngleFunction(L);
+    registerLuaMoveAngleFunction(L);
 }
 
 void warning_func(void *ud, const char *msg, int tocont)
@@ -37,6 +43,7 @@ int main(int argc, char *argv[])
 
     // 创建新的 Lua 状态
     lua_State *L = luaL_newstate();
+    luaL=L;
     lua_setwarnf(L, warning_func, nullptr);
 
     if (L == nullptr)
