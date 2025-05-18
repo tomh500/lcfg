@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 {
     if (argc < 2)
     {
-        cerr << "Usage: " << argv[0] << " <script.lua>" << endl;
+        cerr << "Usage: " << argv[0] << " <script>" << endl;
         return 1;
     }
 
