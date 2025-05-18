@@ -1,14 +1,1 @@
-setExecPath("Horizon/test")
-
-forward(1)
-sleep(10)
-forward(-1)
-
-turnleft(0.3)
-sleep(30)
-turnleft(-1)
-
-setAngle(0,0)
-moveAngle(50,50,60)
-
-jumpbug()
+setExecPath("Horizon/src/modules/scheduler/mirage/vip_to_ladder")
