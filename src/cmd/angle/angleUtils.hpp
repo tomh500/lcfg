@@ -24,8 +24,8 @@ namespace ANGLE
     }
     void relativeAngle(double yaw, double pitch)
     {
-        event.pushEvent(format("yaw {:6} 1 1", (double)(lst_yaw - yaw) / (sensitivity * m_yaw)));
-        event.pushEvent(format("pitch {:6} 1 1", (double)(pitch - lst_pitch) / (sensitivity * m_pitch)));
+        event.pushEvent(format("yaw {:6f} 1 1", (double)(lst_yaw - yaw) / (sensitivity * m_yaw)));
+        event.pushEvent(format("pitch {:6f} 1 1", (double)(pitch - lst_pitch) / (sensitivity * m_pitch)));
         useStdSensitivity();
         lst_yaw = yaw, lst_pitch = pitch;
     }

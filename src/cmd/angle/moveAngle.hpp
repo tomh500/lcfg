@@ -4,7 +4,7 @@
 int luaFunc_moveAngle(lua_State *L)
 {
     int argNum = lua_gettop(L);
-    if (argNum != 2)
+    if (argNum != 3)
         luaL_error(L, "Function 'moveAngle' expects 3 arguments.");
     
     double yaw=luaL_checknumber(L,2);

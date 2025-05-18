@@ -6,9 +6,9 @@
     int luaFunc_##cmd(lua_State *L)                                                           \
     {                                                                                         \
         int argNum = lua_gettop(L);                                                           \
-        int opt = 1;                                                                          \
+        double opt = 1;                                                                          \
         if (argNum == 1)                                                                      \
-            opt = luaL_checkinteger(L, 1);                                                    \
+            opt = luaL_checknumber(L, 1);                                                    \
         if (argNum > 1)                                                                       \
             luaL_error(L, format("Function '{}' expects 0 or 1 argument(s).", #cmd).c_str()); \
         log(format("receive {}({})", #cmd, opt));                                             \
@@ -26,7 +26,11 @@
     X(attack)\
     X(attack2)\
     X(sprint)\
-    X(lookatweapon)
+    X(lookatweapon)\
+    X(turnleft)\
+    X(turnright)\
+    X(turnup)\
+    X(turndown)
 
 #define X(cmd) baseCommandFunction(cmd)
 baseCommandList

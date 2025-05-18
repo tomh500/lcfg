@@ -33,6 +33,7 @@ const size_t LENLIMIT = 128;
 const size_t LINELIMIT = 300;
 const double max_yaw_speed = 300;
 const double max_pitch_speed = 45;
+const string ticker = "hzSche_t";
 
 lua_State* luaL;
 
@@ -126,7 +127,6 @@ class eventList
     class AliasChain
     {
         const string seq_pre = "hzSche_seq_";
-        const string ticker = "hzSche_t";
         string cur;
         int idN;
         Gen *gen;
