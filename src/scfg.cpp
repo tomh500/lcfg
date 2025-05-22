@@ -4,9 +4,10 @@
 #include "cmd/setExecPath/setExecPathCommand.hpp"
 #include "cmd/jump/jumpCommand.hpp"
 #include "cmd/jumpbug/jumpbugCommand.hpp"
-#include "cmd/angle/setAngle.hpp"
 #include "cmd/angle/angle.hpp"
-#include "cmd/angle/moveAngle.hpp"
+#include "cmd/baseInstantCommand.hpp"
+#include "cmd/boost/boostCommand.hpp"
+#include "cmd/misc/miscCommand.hpp"
 #include "utils.hpp"
 
 void registerLuaFunctions(lua_State *L)
@@ -17,9 +18,10 @@ void registerLuaFunctions(lua_State *L)
     registerLuaSetExecPathFunction(L);
     registerLuaJumpFunction(L);
     registerLuaJumpbugFunction(L);
-    registerLuaSetAngleFunction(L);
     registerLuaAngleFunction(L);
-    registerLuaMoveAngleFunction(L);
+    registerLuaBaseInstantFunctions(L);
+    registerLuaBoostFunction(L);
+    registerLuaMiscFunction(L);
 }
 
 void warning_func(void *ud, const char *msg, int tocont)

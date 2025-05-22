@@ -232,6 +232,7 @@ public:
                 {
                     idN++;
                     const auto &cmd = genList(pkg_pre + to_string(idN), cache);
+                    cache.clear();
                     gen.append(cmd);
                     idls.push_back(format("{}{}", pkg_pre, idN));
                 }
