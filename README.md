@@ -23,7 +23,7 @@ SCFG 使用 Lua 语法。
    ```bash
    scfg <your_script_file>
    ```
-3. 现在您得到了一个有若干 `cmd_<id>.cfg` 文件的文件夹。将其与 Horizon 一起使用，放置在任何地方均可。使用以下 cfg 命令来启动
+3. 现在您得到了一个有若干 `cmd_<id>.cfg` 文件的文件夹。将其与 <a href="https://github.com/eLecCap1taL/horizon">Horizon</a> 一起使用，放置在任何地方均可。使用以下 cfg 命令来启动
 
    ```bash
    exec <路径>/cmd_1.cfg;hzSche_process
