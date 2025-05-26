@@ -34,26 +34,3 @@ jobs:
             Write-Host "Build failed"
             exit 1
           }
-
-      # Upload the build artifact (scfg.exe) to the release
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: scfg
-          path: scfg.exe
-
-  release:
-    needs: build
-    runs-on: windows-latest
-    steps:
-      # Checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # Create GitHub release
-      - name: Create GitHub release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          files: scfg.exe
