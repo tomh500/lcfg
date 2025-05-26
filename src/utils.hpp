@@ -2,6 +2,7 @@
 #define SCFG_UTILS
 
 #include <bits/stdc++.h>
+#include <format>
 #include <lua.hpp>
 using namespace std;
 namespace fs = filesystem;
