@@ -29,6 +29,7 @@ jobs:
           g++ ./src/scfg.cpp -I./src/include -L./src/ -llua54 -o scfg.exe -std=c++23 -static
           if ($?) {
             Write-Host "Build successful"
+            ls -al  # 输出当前目录的文件列表
           } else {
             Write-Host "Build failed"
             exit 1
@@ -36,6 +37,7 @@ jobs:
 
       # Upload the build artifact (scfg.exe) to the release
       - name: Upload build artifact
+        if: exists('scfg.exe')  # 只有文件存在时才上传
         uses: actions/upload-artifact@v2
         with:
           name: scfg
