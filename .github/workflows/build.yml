@@ -17,11 +17,10 @@ jobs:
         uses: actions/checkout@v2
 
       # Set up MSYS2 for building with g++
-      - name: Install MSYS2 and g++
-        run: |
-          choco install msys2
-          pacman -Syu --noconfirm
-          pacman -S mingw-w64-x86_64-gcc --noconfirm
+      - name: Set up MinGW
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
 
       # Build the project
       - name: Build the project
@@ -29,8 +28,30 @@ jobs:
           g++ ./src/scfg.cpp -I./src/include -L./src/ -llua54 -o scfg.exe -std=c++23 -static
           if ($?) {
             Write-Host "Build successful"
-            ls -al  # 输出当前目录的文件列表
           } else {
             Write-Host "Build failed"
             exit 1
           }
+          
+      # Upload the build artifact (scfg.exe) to the release
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: scfg
+          path: scfg.exe
+
+  release:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Create GitHub release
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: scfg.exe
