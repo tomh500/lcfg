@@ -37,7 +37,6 @@ jobs:
 
       # Upload the build artifact (scfg.exe) to the release
       - name: Upload build artifact
-        if: exists('scfg.exe')  # 只有文件存在时才上传
         uses: actions/upload-artifact@v2
         with:
           name: scfg
