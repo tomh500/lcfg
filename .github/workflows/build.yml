@@ -35,7 +35,7 @@ jobs:
           
       # Upload the build artifact (scfg.exe) to the release
       - name: Upload build artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: scfg
           path: scfg.exe
