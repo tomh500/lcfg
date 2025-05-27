@@ -34,13 +34,10 @@ void warning_func(void *ud, const char *msg, int tocont)
 }
 int main(int argc, char *argv[])
 {
-    if (argc < 2)
-    {
-        cerr << "Usage: " << argv[0] << " <script>" << endl;
-        return 1;
-    }
+    ARG::init(argc,argv);
 
-    const char *scriptPath = argv[1];
+    string scriptPath = ARG::cmdl[1];
+    
     log("scfg is running.");
 
     // 创建新的 Lua 状态
@@ -61,7 +58,7 @@ int main(int argc, char *argv[])
     registerLuaFunctions(L);
 
     // 执行 Lua 脚本
-    if (luaL_dofile(L, scriptPath) != LUA_OK)
+    if (luaL_dofile(L, scriptPath.c_str()) != LUA_OK)
     {
         cerr << "Error executing script: " << lua_tostring(L, -1) << endl;
         lua_pop(L, 1); // 移除错误消息

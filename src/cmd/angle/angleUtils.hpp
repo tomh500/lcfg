@@ -13,7 +13,7 @@ namespace ANGLE
     }
     void useUserSensitivity()
     {
-        event.pushEvent("hzCVAR_sens");
+        event.pushEvent(SCFGProxy::REC_SENS);
     }
     void resetAngle()
     {

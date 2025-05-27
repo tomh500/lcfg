@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include <format>
 #include <lua.hpp>
+#include "include/argh.h"
 using namespace std;
 namespace fs = filesystem;
 
@@ -34,9 +35,8 @@ const size_t LENLIMIT = 128;
 const size_t LINELIMIT = 300;
 const double max_yaw_speed = 300;
 const double max_pitch_speed = 45;
-const string ticker = "hzSche_t";
 
-lua_State* luaL;
+lua_State *luaL;
 
 string genList(const string &name, const vector<string> &ls)
 {
@@ -61,6 +61,55 @@ size_t getListLen(const vector<string> &ls)
         ret += s.size();
     }
     return ret;
+}
+
+namespace SCFGProxy
+{
+    string REC_SENS = "hzCVAR_sens";
+    string TICKER = "hzSche_t";
+    string SEQ_PRE = "hzSche_seq_";
+    string PKG_PRE = "hzSche_pkg_";
+    string STOP = "hzSche_stop_t";
+    string LOCKMOUSE = "hzSche_lockmouse";
+    string UNLOCKMOUSE = "hzSche_unlockmouse";
+    string WASDCANCEL = "hzSche_wasdCancel";
+    vector<pair<string, string>> additional_files;
+    void add_file(string name,string content){
+        additional_files.push_back(make_pair(name,content));
+    }
+    string proxy(const string &s)
+    {
+        return s;
+    }
+}
+
+namespace ARG
+{
+    argh::parser cmdl;
+    void outUsage()
+    {
+        cout << "Usage: scfg <your_script_file_here>";
+        exit(0);
+    }
+    void init(int argc, char *argv[])
+    {
+        cmdl = argh::parser(argc, argv);
+        if (cmdl.pos_args().size() == 1)
+            outUsage();
+        if (cmdl[{"-h", "-help"}])
+            outUsage();
+        if (cmdl[{"-dm"}])
+        {
+            SCFGProxy::REC_SENS = "rec_sensitivity";
+            SCFGProxy::TICKER = "sq_sf";
+            SCFGProxy::SEQ_PRE = "Sma_Seq_";
+            SCFGProxy::PKG_PRE = "hzSche_pkg_";
+            SCFGProxy::STOP = "smartactive_stop;alias sq_sf Sma_Seq_1";
+            SCFGProxy::LOCKMOUSE = "hzSche_lockmouse";
+            SCFGProxy::UNLOCKMOUSE = "hzSche_unlockmouse";
+            SCFGProxy::WASDCANCEL = "hzSche_wasdCancel";
+        }
+    }
 }
 
 // 事件列表
@@ -127,7 +176,6 @@ class eventList
     } gen;
     class AliasChain
     {
-        const string seq_pre = "hzSche_seq_";
         string cur;
         int idN;
         Gen *gen;
@@ -140,10 +188,10 @@ class eventList
             {
                 if (secon)
                     cur += ";";
-                cur += format("{}{}\"", seq_pre, idN);
+                cur += format("{}{}\"", SCFGProxy::SEQ_PRE, idN);
                 gen->append(cur);
             }
-            cur = format("alias {}{} \"", seq_pre, idN);
+            cur = format("alias {}{} \"", SCFGProxy::SEQ_PRE, idN);
         }
         void init(Gen *ptr)
         {
@@ -174,7 +222,7 @@ class eventList
                 cur += ";";
             for (int i = 1; i <= tick; i++)
             {
-                cur += format("alias {} ", ticker);
+                cur += format("alias {} ", SCFGProxy::TICKER);
                 if (cur.size() >= LENLIMIT)
                     newalias(false);
             }
@@ -216,12 +264,13 @@ public:
         if (!execpath_set)
             lua_warning(L, "exec path has not been set! Are you sure?", 0);
         gen.init(workspace, execpath);
-        const string pkg_pre = "hzSche_pkg_";
         int idN = 0;
 
-        //add hz_stop
-        if(ls.empty()) ls[0].push_back("hzSche_stop_t");
-        else    ls[ls.rbegin()->first + 1].push_back("hzSche_stop_t");
+        // add hz_stop
+        if (ls.empty())
+            ls[0].push_back(SCFGProxy::STOP), ls[0].push_back(" ");
+        else
+            ls[ls.rbegin()->first + 1].push_back(SCFGProxy::STOP),ls.rbegin()->second.push_back(" ");
         // split command blocks into ids
         for (auto &[t, cmdls] : ls)
         {
@@ -229,22 +278,22 @@ public:
             vector<string> cache;
             for (auto &s : cmdls)
             {
-                if (getListLen(cache) + s.size() > LENLIMIT - pkg_pre.size() - 9 && getListLen(cache) > 0)
+                if (getListLen(cache) + s.size() > LENLIMIT - SCFGProxy::PKG_PRE.size() - 9 && getListLen(cache) > 0)
                 {
                     idN++;
-                    const auto &cmd = genList(pkg_pre + to_string(idN), cache);
+                    const auto &cmd = genList(SCFGProxy::PKG_PRE + to_string(idN), cache);
                     cache.clear();
                     gen.append(cmd);
-                    idls.push_back(format("{}{}", pkg_pre, idN));
+                    idls.push_back(format("{}{}", SCFGProxy::PKG_PRE, idN));
                 }
                 cache.push_back(s);
             }
             if (!cache.empty())
             {
                 idN++;
-                const auto &cmd = genList(pkg_pre + to_string(idN), cache);
+                const auto &cmd = genList(SCFGProxy::PKG_PRE + to_string(idN), cache);
                 gen.append(cmd);
-                idls.push_back(format("{}{}", pkg_pre, idN));
+                idls.push_back(format("{}{}", SCFGProxy::PKG_PRE, idN));
             }
             cmdls = idls;
         }
@@ -263,7 +312,18 @@ public:
             }
         }
         aliaschain.end();
+
+        // gen additional files
+        if(ARG::cmdl[{"-dm"}]){
+            SCFGProxy::add_file("_init_.cfg",format("alias sq_smartactive\nexec {}/cmd_1.cfg\nalias sq_sf Sma_Seq_1",execpath.string()));
+        }
+        for(auto& [name,content]:SCFGProxy::additional_files){
+            ofstream fout((workspace/name).string(),ios::out);
+            fout<<content;
+            fout.close();
+        }
     }
 } event;
+
 
 #endif

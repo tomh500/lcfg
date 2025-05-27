@@ -1,10 +1,4 @@
-setExecPath("Horizon/src/modules/scheduler/mirage/vip_to_ladder")
-
-
-
-
-
-
-jump()
-sprint()
-setAngle(21.868013,28.95016)
+for i=1,1000,1 do
+    jump()
+    sleep(1)
+end

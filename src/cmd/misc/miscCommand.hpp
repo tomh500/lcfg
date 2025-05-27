@@ -5,7 +5,7 @@ int luaFunc_lockMouse(lua_State *L)
     int argNum = lua_gettop(L);
     if (argNum != 0)
         luaL_error(L, "Function 'lockMouse' expects 0 argument.");
-    event.pushEvent("hzSche_lockmouse");
+    event.pushEvent(SCFGProxy::LOCKMOUSE);
     return 0;
 }
 int luaFunc_unlockMouse(lua_State *L)
@@ -13,7 +13,7 @@ int luaFunc_unlockMouse(lua_State *L)
     int argNum = lua_gettop(L);
     if (argNum != 0)
         luaL_error(L, "Function 'unlockMouse' expects 0 argument.");
-    event.pushEvent("hzSche_unlockmouse");
+    event.pushEvent(SCFGProxy::UNLOCKMOUSE);
     return 0;
 }
 int luaFunc_wasdCancel(lua_State *L)
@@ -21,7 +21,7 @@ int luaFunc_wasdCancel(lua_State *L)
     int argNum = lua_gettop(L);
     if (argNum != 0)
         luaL_error(L, "Function 'wasdCancel' expects 0 argument.");
-    event.pushEvent("hzSche_wasdCancel");
+    event.pushEvent(SCFGProxy::WASDCANCEL);
     return 0;
 }
 int luaFunc_play(lua_State *L)
