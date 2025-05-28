@@ -65,14 +65,15 @@ size_t getListLen(const vector<string> &ls)
 
 namespace SCFGProxy
 {
-    string REC_SENS = "hzCVAR_sens";
-    string TICKER = "hzSche_t";
-    string SEQ_PRE = "hzSche_seq_";
-    string PKG_PRE = "hzSche_pkg_";
-    string STOP = "hzSche_stop_t";
-    string LOCKMOUSE = "hzSche_lockmouse";
-    string UNLOCKMOUSE = "hzSche_unlockmouse";
-    string WASDCANCEL = "hzSche_wasdCancel";
+
+string REC_SENS = "rec_sensitivity";
+string TICKER = "sq_sf";
+string SEQ_PRE = "Sma_Seq_";
+string PKG_PRE = "hzSche_pkg_";
+string STOP = "smartactive_stop;alias sq_sf Sma_Seq_1";
+string LOCKMOUSE = "hzSche_lockmouse";
+string UNLOCKMOUSE = "hzSche_unlockmouse";
+string WASDCANCEL = "hzSche_wasdCancel";
     vector<pair<string, string>> additional_files;
     void add_file(string name,string content){
         additional_files.push_back(make_pair(name,content));
@@ -98,16 +99,20 @@ namespace ARG
             outUsage();
         if (cmdl[{"-h", "-help"}])
             outUsage();
-        if (cmdl[{"-dm"}])
+        if (cmdl[{"-hz"}])
         {
-            SCFGProxy::REC_SENS = "rec_sensitivity";
-            SCFGProxy::TICKER = "sq_sf";
-            SCFGProxy::SEQ_PRE = "Sma_Seq_";
-            SCFGProxy::PKG_PRE = "hzSche_pkg_";
-            SCFGProxy::STOP = "smartactive_stop;alias sq_sf Sma_Seq_1";
-            SCFGProxy::LOCKMOUSE = "hzSche_lockmouse";
-            SCFGProxy::UNLOCKMOUSE = "hzSche_unlockmouse";
-            SCFGProxy::WASDCANCEL = "hzSche_wasdCancel";
+
+    SCFGProxy::REC_SENS = "hzCVAR_sens";
+    SCFGProxy::TICKER = "hzSche_t";
+    SCFGProxy::SEQ_PRE = "hzSche_seq_";
+    SCFGProxy::PKG_PRE = "hzSche_pkg_";
+    SCFGProxy::STOP = "hzSche_stop_t";
+    SCFGProxy::LOCKMOUSE = "hzSche_lockmouse";
+    SCFGProxy::UNLOCKMOUSE = "hzSche_unlockmouse";
+    SCFGProxy::WASDCANCEL = "hzSche_wasdCancel";
+
+
+
         }
     }
 }
@@ -314,9 +319,10 @@ public:
         aliaschain.end();
 
         // gen additional files
-        if(ARG::cmdl[{"-dm"}]){
-            SCFGProxy::add_file("_init_.cfg",format("alias sq_smartactive\nexec {}/cmd_1.cfg\nalias sq_sf Sma_Seq_1",execpath.string()));
+    if (!ARG::cmdl[{"-hz"}]) {
+        SCFGProxy::add_file("_init_.cfg", format("alias sq_smartactive\nexec {}/cmd_1.cfg\nalias sq_sf Sma_Seq_1", execpath.string()));
         }
+
         for(auto& [name,content]:SCFGProxy::additional_files){
             ofstream fout((workspace/name).string(),ios::out);
             fout<<content;

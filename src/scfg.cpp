@@ -72,7 +72,8 @@ int main(int argc, char *argv[])
 
     // generate
     event.generate(fs::current_path() / fs::path(argv[1]).stem(), L);
-    FlagDevicesWithEnv();
+    //FlagDevicesWithEnv();
+    FlagDevicesWithReg();
     // 清理
     lua_close(L);
     return 0;
