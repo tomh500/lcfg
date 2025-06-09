@@ -5,6 +5,7 @@
 #include <format>
 #include <lua.hpp>
 #include "include/argh.h"
+#include "include/Global.h"
 using namespace std;
 namespace fs = filesystem;
 
