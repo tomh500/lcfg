@@ -2,3 +2,5 @@
 **/.idea
 scfg.exe
 lcfg.exe
+createbhopfuc.py
+bhop_output.cpp

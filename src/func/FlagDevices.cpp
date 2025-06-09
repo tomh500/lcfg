@@ -6,6 +6,8 @@
 #endif
 using namespace std;
 
+
+
 int FlagDevicesWithEnv() {
 #ifdef _WIN32
     const string key = "ScfgExecuted";
