@@ -14,14 +14,14 @@ namespace fs = filesystem;
 
 int generateBhopFile() {
     const std::string filename = "_init_.cfg";
-    const unsigned char BOM[] = {0xEF, 0xBB, 0xBF};
+//    const unsigned char BOM[] = {0xEF, 0xBB, 0xBF};
     std::ofstream outFile(filename, std::ios::binary);
     if (!outFile) {
         std::cerr << "Failed to open output file: " << filename << std::endl;
         return 1;
     }
 
-    outFile.write(reinterpret_cast<const char*>(BOM), sizeof(BOM));
+  //  outFile.write(reinterpret_cast<const char*>(BOM), sizeof(BOM));
 
     outFile << "alias sq_sf_bhop sma_autobhop_seq_1\n";
     outFile << "alias sqbhop_pkg_1 \"/fps_low;+jump;-jump\"\n";
