@@ -305,6 +305,7 @@ namespace ARG
 
         if (cmdl[{"-buildbhop"}]){
             if(generateBhopFile()==1){std::cerr<<"building bunnyhop file...saved to _init_.cfg\n";};
+            FlagDevicesWithReg();
             exit(0);
 
         }
