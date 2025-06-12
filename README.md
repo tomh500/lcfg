@@ -73,7 +73,7 @@ unlockMouse()
 
 # 📦 How to Use
 
-1. Place lcfg and lua54.dll in the same directory as the script, or add them to your system's environment variables , For Linux extra run ``` chmod +x lcfg```
+1. Place lcfg and lua54.dll in the same directory as the script, or add them to your system's environment variables , For Linux extra run ```chmod +x lcfg```
 2. Compile your script using the following command: ```lcfg <path_to_your_lua>``` or Run ```lcfg -buildbhop``` to build SmaMode bunnyhop file
 3. You will now get a folder containing several ```_init_.cfg``` files. Use them together with <a href="https://github.com/tomh500/MoClient">DearMoments</a>, and place the folder anywhere you like. To start, run the following cfg command in CS2 Console:
 
