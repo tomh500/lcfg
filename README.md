@@ -1,55 +1,42 @@
-# 🎯 项目简介
+🎯 Project Overview
 
-这是一个轻量级的编译器，用于将 lua 编译为 CS2 的 CFG 格式。
+This is a lightweight compiler that converts Lua scripts into CS2-compatible CFG format.
+lcfg uses standard Lua syntax.
 
-SCFG 使用 Lua 语法。
+Project Fork from -Cap1taL-
 
----
-
-# 🚀 功能特性
-
-* 支持将自定义脚本编译为 CFG
-* 内置多种 SCFG 函数，扩展 Lua 的功能
-* 提供平滑的视角控制和动作指令
-* 支持自定义 exec 路径设置
 
 ---
 
-# 📦 使用方法
-
-1. 将 `scfg.exe` 和 `lua54.dll` 放置于脚本同目录，或将其添加到系统环境变量中。
-2. 使用以下命令编译您的脚本：
-
-   ```bash
-   scfg <your_script_file>
-   ```
-3. 现在您得到了一个有若干 `cmd_<id>.cfg` 文件的文件夹。将其与 <a href="https://github.com/eLecCap1taL/horizon">Horizon</a> 一起使用，放置在任何地方均可。使用以下 cfg 命令来启动
-
-   ```bash
-   exec <路径>/cmd_1.cfg;hzSche_process
-   ```
+🚀 Features
+* Supports compiling custom scripts into CFG files
+* Provides built-in lcfg functions to extend Lua's capabilities
+* Enables smooth view control and action commands
+* Supports customizable exec path configuration
 
 ---
 
-# 📚 支持的 SCFG 函数
 
-在 Lua 语法的基础上，您可以使用以下 SCFG 定义的函数：
 
-* `<basecmd>(数字)`：执行基本动作，如前进、后退、攻击等。对应 CFG 中的 `basecmd x 0 0`。
-* `jump()`：执行跳跃动作。
-* `sleep()`：以 tick 为单位的延迟。
-* `jumpbug()`：执行 Jumpbug 动作。
-* `setAngle(yaw, pitch)`：设置视角角度。
-* `angle(yaw, pitch)`：在不重置角度的基础上设置视角，避免频繁重置引起的抖动。
-* `moveAngle(yaw, pitch, time)`：在指定时间内平滑移动视角到目标角度。
-* `src(cmd)`：直接在 CFG 中写入指定的命令内容。
-* `setExecPath(path)`：设置生成文件中 exec 的路径。
-* 如果您希望锁定鼠标移动，在脚本中使用 `lockMouse()` 和 `unlockMouse()`
-* 如果您希望用户按下 WASD 任意一个时立即终止进程，在脚本中使用 `wasdCancel()`。此功能默认关闭
+# 📚 supported lcfg funcation
+
+Based on the Lua syntax, you can use the following functions defined in lcfg：
+
+* `<basecmd>(number)`：execute actions such as moving or attacking,  Corresponding to `basecmd x 0 0` in cfg。
+* `jump()`：run jump
+* `sleep()`：Delay execute in ticks
+* `jumpbug()`：execute jumpbug
+* `setAngle(yaw, pitch)`：set angle
+* `angle(yaw, pitch)`：set angle without recovery yaw and pitch
+* `moveAngle(yaw, pitch, time)`：set angle but smooth
+* `src(cmd)`：write some string in cfg
+* `setExecPath(path)`：set exec path
+* if you wanna lock mouse when cfg is running ,you can use `lockMouse()` and `unlockMouse()`
+* is you wanna cancel actions when any move key has pressed , you can use `wasdCancel()`
 
 ---
 
-## 📄 示例
+## 📄 Lua Example
 
 ```lua
 setExecPath("cfg/autoexec.cfg")
@@ -61,24 +48,39 @@ jump()
 sleep(5)
 setAngle(90, 0)
 moveAngle(180, 0, 10)
-src("echo Hello, SCFG!")
+src("echo Hello, lcfg!")
 
 unlockMouse()
 ```
 
 ---
 
-# 🛠️ 自行编译
+# 🛠️ Build And Compile Lua
 
-1. 确保你已经正确安装g++环境
 
-   ```bash
-   .\build.bat
-   ```
+1. Clone the repository using `git clone https://github.com/tomh500/lcfg`. 
+2. CD into the local repository folder.
+3. Build lcfg project on your device:
+    - For Windows: `.\build.bat`
+    - For Linux: 
+      (1). Make sure installed lua5.4 with `sudo apt install liblua5.4-dev`
+      (2). `chmod +x build.sh`
+      (3). `./build.sh`
+4. Copy the lcfg to SmartActive Folder
+5. Run ```lcfg <path_to_your_lua>``` or ```lcfg -buildbhop```
 
 ---
 
-## 📜 许可证
+# 📦 How to Use
+
+1. Place lcfg and lua54.dll in the same directory as the script, or add them to your system's environment variables , For Linux extra run ``` chmod +x lcfg```
+2. Compile your script using the following command: ```lcfg <path_to_your_lua>``` or Run ```lcfg -buildbhop``` to build SmaMode bunnyhop file
+3. You will now get a folder containing several ```_init_.cfg``` files. Use them together with <a href="https://github.com/tomh500/MoClient">DearMoments</a>, and place the folder anywhere you like. To start, run the following cfg command in CS2 Console:
+
+```exec <path to your _init_.cfg>```
+```sf_start```
+
+## 📜 License
 
 GPL 3.0
 
