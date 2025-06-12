@@ -1,4 +1,4 @@
-🎯 Project Overview
+# 🎯 Project Overview
 
 This is a lightweight compiler that converts Lua scripts into CS2-compatible CFG format.
 lcfg uses standard Lua syntax.
@@ -8,7 +8,7 @@ Project Fork from -Cap1taL-
 
 ---
 
-🚀 Features
+# 🚀 Features
 * Supports compiling custom scripts into CFG files
 * Provides built-in lcfg functions to extend Lua's capabilities
 * Enables smooth view control and action commands
