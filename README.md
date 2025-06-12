@@ -1,87 +1,127 @@
-# 🎯 Project Overview
+ 
+[English](#) | [简体中文](README_CN.md)
 
-This is a lightweight compiler that converts Lua scripts into CS2-compatible CFG format.
-lcfg uses standard Lua syntax.
+ # 🎯 Project Overview
 
-Project Fork from -Cap1taL-
+ This is a lightweight compiler that converts Lua scripts into CS2-compatible CFG format.  
+ `lcfg` uses standard Lua syntax.
 
+ > Project forked from **-Cap1taL-**
+ 
 
----
+ ---
 
-# 🚀 Features
-* Supports compiling custom scripts into CFG files
-* Provides built-in lcfg functions to extend Lua's capabilities
-* Enables smooth view control and action commands
-* Supports customizable exec path configuration
+ # 🚀 Features
 
----
+ - Compile custom Lua scripts into CFG files  
+ - Built-in `lcfg` functions extending Lua's capabilities  
+ - Smooth view control and advanced movement commands  
+ - Customizable `exec` path for integration  
 
+ ---
 
+ # 📚 Supported lcfg Functions
 
-# 📚 supported lcfg funcation
+ Based on Lua syntax, you can use the following functions defined by `lcfg`:
 
-Based on the Lua syntax, you can use the following functions defined in lcfg：
+ - `<basecmd>(number)`: Execute basic actions like moving or attacking, equivalent to `basecmd x 0 0` in CFG  
+ - `jump()`: Performs a jump  
+ - `sleep(ticks)`: Delay execution by ticks  
+ - `jumpbug()`: Executes jumpbug technique  
+ - `setAngle(yaw, pitch)`: Sets view angles  
+ - `angle(yaw, pitch)`: Sets angle without recovering yaw/pitch  
+ - `moveAngle(yaw, pitch, time)`: Smooth angle transition  
+ - `src(cmd_string)`: Insert raw command string into CFG  
+ - `setExecPath(path)`: Define exec output path  
+ - `lockMouse()` / `unlockMouse()`: Locks/unlocks mouse input  
+ - `wasdCancel()`: Cancels execution if movement keys are pressed  
 
-* `<basecmd>(number)`：execute actions such as moving or attacking,  Corresponding to `basecmd x 0 0` in cfg。
-* `jump()`：run jump
-* `sleep()`：Delay execute in ticks
-* `jumpbug()`：execute jumpbug
-* `setAngle(yaw, pitch)`：set angle
-* `angle(yaw, pitch)`：set angle without recovery yaw and pitch
-* `moveAngle(yaw, pitch, time)`：set angle but smooth
-* `src(cmd)`：write some string in cfg
-* `setExecPath(path)`：set exec path
-* if you wanna lock mouse when cfg is running ,you can use `lockMouse()` and `unlockMouse()`
-* is you wanna cancel actions when any move key has pressed , you can use `wasdCancel()`
+ ---
 
----
+ ## 📄 Lua Example
 
-## 📄 Lua Example
+ ```lua
+ setExecPath("cfg/autoexec.cfg")
 
-```lua
-setExecPath("cfg/autoexec.cfg")
+ lockMouse()
+ wasdCancel()
 
-lockMouse()
-wasdCancel()
+ jump()
+ sleep(5)
+ setAngle(90, 0)
+ moveAngle(180, 0, 10)
+ src("echo Hello, lcfg!")
 
-jump()
-sleep(5)
-setAngle(90, 0)
-moveAngle(180, 0, 10)
-src("echo Hello, lcfg!")
+ unlockMouse()
+ ```
 
-unlockMouse()
-```
+ ---
 
----
+ # 🛠️ Build and Compile Lua
 
-# 🛠️ Build And Compile Lua
+ 1. Clone the repository:  
+    ```bash
+    git clone https://github.com/tomh500/lcfg
+    ```
+ 2. Enter the project directory:  
+    ```bash
+    cd lcfg
+    ```
+ 3. Build the project:
+    - **Windows**:  
+      ```bash
+      .\build.bat
+      ```
+    - **Linux**:  
+      1. Install Lua 5.4 development headers:  
+         ```bash
+         sudo apt install liblua5.4-dev
+         ```
+      2. Make the build script executable:  
+         ```bash
+         chmod +x build.sh
+         ```
+      3. Run build:  
+         ```bash
+         ./build.sh
+         ```
 
+ 4. Copy the `lcfg` binary to your SmartActive folder  
+ 5. Compile Lua scripts:
+    ```bash
+    lcfg <your_script.lua>
+    ```
+    Or build bhop file:
+    ```bash
+    lcfg -buildbhop
+    ```
 
-1. Clone the repository using `git clone https://github.com/tomh500/lcfg`. 
-2. CD into the local repository folder.
-3. Build lcfg project on your device:
-    - For Windows: `.\build.bat`
-    - For Linux: 
-      (1). Make sure installed lua5.4 with `sudo apt install liblua5.4-dev`
-      (2). `chmod +x build.sh`
-      (3). `./build.sh`
-4. Copy the lcfg to SmartActive Folder
-5. Run ```lcfg <path_to_your_lua>``` or ```lcfg -buildbhop```
+ ---
 
----
+ # 📦 How to Use
 
-# 📦 How to Use
+ 1. Place `lcfg` and `lua54.dll` in the same directory as your script, or add them to your system's environment variables  
+ 2. (Linux only) Make `lcfg` executable:  
+    ```bash
+    chmod +x lcfg
+    ```
+ 3. Run the compiler:  
+    ```bash
+    lcfg <your_script.lua>
+    ```
+    Or generate SmartActive bunnyhop config:
+    ```bash
+    lcfg -buildbhop
+    ```
+ 4. You’ll get a folder with `_init_.cfg` files. Use them with <a href="https://github.com/tomh500/MoClient">DearMoments</a>. In CS2 console, run:
 
-1. Place lcfg and lua54.dll in the same directory as the script, or add them to your system's environment variables
-2.  For Linux extra run ```chmod +x lcfg```
-3. Run: ```lcfg <path_to_your_lua>``` to Compile lua or Run ```lcfg -buildbhop``` to build SmaMode bunnyhop file
-4. You will now get a folder containing several ```_init_.cfg``` files. Use them together with <a href="https://github.com/tomh500/MoClient">DearMoments</a>, and place the folder anywhere you like. To start, run the following cfg command in CS2 Console:
+    ```cfg
+    exec <path_to/_init_.cfg>
+    sf_start
+    ```
 
-```exec <path to your _init_.cfg>``` then 
-```sf_start```
+ ---
 
-## 📜 License
+ ## 📜 License
 
-GPL 3.0
-
+ Licensed under [GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
