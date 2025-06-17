@@ -334,7 +334,7 @@ class eventList
             string nxtpage = format("cmd_{}.cfg", N);
             if (N > 1)
                 fout << format("exec {}", (exec / nxtpage).string());
-            fout = ofstream((root / nxtpage).string(), ios::out);
+            fout = ofstream((root / nxtpage).string(), ios::out | ios::binary);
         }
         void remove_cmd_files(const fs::path &root)
         {
@@ -520,7 +520,7 @@ public:
         }
 
         for(auto& [name,content]:SCFGProxy::additional_files){
-            ofstream fout((workspace/name).string(),ios::out);
+            ofstream fout((workspace/name).string(), ios::out | ios::binary);
             fout<<content;
             fout.close();
         }
