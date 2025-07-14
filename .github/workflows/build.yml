@@ -1,0 +1,21 @@
+name: Build with Shell Script
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Make script executable
+      run: chmod +x build.sh
+
+    - name: Run build.sh
+      run: ./build.sh
