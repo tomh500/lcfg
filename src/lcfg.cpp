@@ -35,7 +35,9 @@ void warning_func(void *ud, const char *msg, int tocont)
 }
 int main(int argc, char *argv[])
 {
-    RemoteChecker();
+    #ifdef _WIN32
+    system("chcp 65001");
+    #endif 
     ARG::init(argc,argv);
 
     string scriptPath = ARG::cmdl[1];
@@ -58,6 +60,12 @@ int main(int argc, char *argv[])
 
     // 注册 C++ 函数到 Lua
     registerLuaFunctions(L);
+
+    RemoteChecker();
+
+    if (!HeaderChecker(scriptPath)) {
+         return 101; 
+    }
 
     // 执行 Lua 脚本
     if (luaL_dofile(L, scriptPath.c_str()) != LUA_OK)
