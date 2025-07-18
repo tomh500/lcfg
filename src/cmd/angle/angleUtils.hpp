@@ -13,7 +13,7 @@ namespace ANGLE
     }
     void useUserSensitivity()
     {
-        event.pushEvent(SCFGProxy::REC_SENS);
+        event.pushEvent(lcfgProxy::REC_SENS);
     }
     void resetAngle()
     {

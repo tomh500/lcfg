@@ -1,6 +1,6 @@
 **/.vs
 **/.idea
-scfg.exe
+lcfg.exe
 lcfg.exe
 createbhopfuc.py
 bhop_output.cpp

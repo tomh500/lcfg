@@ -1,1 +1,1 @@
-g++ scfg.cpp -o scfg -std=c++23 -O2 -static
+g++ lcfg.cpp -o lcfg -std=c++23 -O2 -static

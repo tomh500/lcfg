@@ -2,10 +2,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class scfg_number{
+class lcfg_number{
     int number;
 public:
-    scfg_number(const string& s){
+    lcfg_number(const string& s){
         if(s.size()==0) error("wrong time format with string '"+s+"'");
         number=0;
         for(size_t i=0;i<s.size();i++){
@@ -14,17 +14,17 @@ public:
         }
     }
 };
-class scfg_command{
-    typedef variant<scfg_command,scfg_number,vector<scfg_command>> scfg_args;
+class lcfg_command{
+    typedef variant<lcfg_command,lcfg_number,vector<lcfg_command>> lcfg_args;
     string key_prefix;
-    vector<scfg_args> arg_list;
+    vector<lcfg_args> arg_list;
 };
 
 
 
 void load(fs::path file)
 {
-    log("Reading scfg files...");
+    log("Reading lcfg files...");
 
     string prog = get_raw(file);
 
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     // check argc
     if (argc < 2)
     {
-        cout << "Usage: scfg.exe <file> <args>" << endl;
+        cout << "Usage: lcfg.exe <file> <args>" << endl;
         cout << "args:" << endl;
         cout << "--allerror    Treat all warnings as errors, causing the compilation to terminate on any warning.";
         quitf(1);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     // process addtion args
     for (int i = 2; i < argc; i++)
     {
-        scfg_args::check_arg(string(argv[i]));
+        lcfg_args::check_arg(string(argv[i]));
     }
 
     // get file path

@@ -35,11 +35,12 @@ void warning_func(void *ud, const char *msg, int tocont)
 }
 int main(int argc, char *argv[])
 {
+    RemoteChecker();
     ARG::init(argc,argv);
 
     string scriptPath = ARG::cmdl[1];
     
-    log("scfg is running.");
+    log("lcfg is running.");
 
     // 创建新的 Lua 状态
     lua_State *L = luaL_newstate();
@@ -68,7 +69,7 @@ int main(int argc, char *argv[])
     }
 
     // check
-    log(format("ok process scfg file. end with current tick={}.", event.time()));
+    log(format("ok process lcfg file. end with current tick={}.", event.time()));
 
     // generate
     event.generate(fs::current_path() / fs::path(argv[1]).stem(), L);

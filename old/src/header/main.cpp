@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
-#include "scfg.hpp"
+#include "lcfg.hpp"
 using namespace std;
 int main(){
-    SCFG::SCFG scfg("res.txt");
-    SCFG::command forward_and_jump({
+    lcfg::lcfg lcfg("res.txt");
+    lcfg::command forward_and_jump({
 
     });
-    scfg.gen();
+    lcfg.gen();
     return 0;
 }

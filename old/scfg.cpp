@@ -273,7 +273,7 @@ void slp(double x, bool strict = 0)
     fout << format("alias syncer_callback \"exec {}/{}\"\n", path, ++N);
     fout << "syncer_schedule";
     fout = ofstream(format("Temp/{}.cfg", N), ios::out);
-    fout << "//[generated with scfg]\n\n";
+    fout << "//[generated with lcfg]\n\n";
 }
 
 void ang(double x, double y, bool needstd = 1)
@@ -416,8 +416,8 @@ int main(int argc, char *argv[])
     if (argls.size() != 2)
     {
         cerr << "Error: Invalid number of arguments.\n";
-        cerr << "Usage: scfg <input file>\n";
-        cerr << "Example: scfg input.cs2script\n";
+        cerr << "Usage: lcfg <input file>\n";
+        cerr << "Example: lcfg input.cs2script\n";
         genfailed();
     }
 

@@ -1,7 +1,7 @@
 
 #include <bits/stdc++.h>
 
-namespace SCFG
+namespace lcfg
 {
 
     namespace fs = std::filesystem;
@@ -11,12 +11,12 @@ namespace SCFG
         std::vector<command> cmdls;
     };
 
-    class SCFG
+    class lcfg
     {
         fs::path output_file;
 
     public:
-        SCFG(fs::path output_file) : output_file(output_file)
+        lcfg(fs::path output_file) : output_file(output_file)
         {
         }
 

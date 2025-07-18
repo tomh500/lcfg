@@ -10,7 +10,7 @@ using namespace std;
 
 int FlagDevicesWithEnv() {
 #ifdef _WIN32
-    const string key = "ScfgExecuted";
+    const string key = "lcfgExecuted";
     const string value = "1";
     const string env_str = key + "=" + value;
 

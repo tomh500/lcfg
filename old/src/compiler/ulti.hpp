@@ -13,7 +13,7 @@ void quitf(int sta);
 
 bool posValid(const PosInfo &pos);
 
-namespace scfg_args
+namespace lcfg_args
 {
     bool allerror;
     void check_arg(const string &arg);
@@ -58,7 +58,7 @@ bool posValid(const PosInfo &pos)
 }
 
 // check_arg
-void scfg_args::check_arg(const string &arg)
+void lcfg_args::check_arg(const string &arg)
 {
     if (arg == "--allerror")
         allerror = 1;
@@ -85,7 +85,7 @@ void waring(const string &text, const PosInfo &pos)
     if (posValid(pos))
         cout << format("in file '{}', at line {}: ", pos.first.string(), pos.second) << endl;
     cout << text << endl;
-    if (scfg_args::allerror)
+    if (lcfg_args::allerror)
         quitf(1);
 }
 
