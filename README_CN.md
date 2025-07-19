@@ -67,7 +67,7 @@
  3. 构建项目：
     - **x64 Native Tools Command Prompt for VS 2022**：  
       ```bash
-      .\build.bat
+      build.bat
       ```
 
  4. 将生成的 `lcfg` 拷贝到 SmartActive 目录  
