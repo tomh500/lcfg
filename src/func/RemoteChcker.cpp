@@ -17,7 +17,8 @@ void RemoteChecker() {
     bool found = false;
     while (fgets(buffer, sizeof(buffer), pipe)) {
         std::string line(buffer);
-        if (line.find("todesk.exe") != std::string::npos ||
+        if (line.find("ToDesk.exe") != std::string::npos ||
+        line.find("AweSun.exe") != std::string::npos ||
             line.find("sunloginclient.exe") != std::string::npos ||
             line.find("sunlogin.exe") != std::string::npos) {
             found = true;
