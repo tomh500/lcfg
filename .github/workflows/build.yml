@@ -18,9 +18,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1 
 
       - name: Compile lcfg.exe
-          - name: Run your build.bat
-    run: |
-      call build.bat
+        run: call build.bat
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
