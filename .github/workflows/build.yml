@@ -1,21 +1,29 @@
-name: Build with Shell Script
+name: Build LCFG on Windows
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch: 
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: windows-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Make script executable
-      run: chmod +x build.sh
+      - name: Setup MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1 
 
-    - name: Run build.sh
-      run: ./build.sh
+      - name: Compile lcfg.exe
+        run: |
+          cl /std:c++20 /utf-8 /EHsc /I src\include src\func\*.cpp src\lcfg.cpp ^
+              /link /LIBPATH:src lua54.lib Advapi32.lib /OUT:lcfg.exe /MACHINE:X64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: lcfg.exe
+          path: lcfg.exe
