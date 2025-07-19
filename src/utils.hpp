@@ -23,8 +23,7 @@ namespace fs = filesystem;
 #include <string>
 #include <iostream>
 
-
-
+extern int g_lcfgVersion;
 
 string getCurrentTimeString()
 {

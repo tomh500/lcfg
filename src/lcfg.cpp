@@ -12,13 +12,16 @@
 #include "include/Global.h"
 
 lua_State* luaL;
+int g_lcfgVersion = 1; 
 
 int LCFG_VERSION(lua_State* L) {
     int version = luaL_checkinteger(L, 1);
+    g_lcfgVersion = version;
     lua_pushboolean(L, true);
     lua_setglobal(L, "_LCFG_VER_CHECKED");
     return 0;
 }
+
 
 
 void registerLuaFunctions(lua_State *L)
@@ -79,6 +82,10 @@ int main(int argc, char *argv[])
          return 101; 
     }
 
+    luaL_loadfile(L, "your_script.lua");
+    lua_pcall(L, 0, 0, 0);
+
+   
     // 执行 Lua 脚本
     if (luaL_dofile(L, scriptPath.c_str()) != LUA_OK)
     {
