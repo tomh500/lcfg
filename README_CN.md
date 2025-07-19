@@ -52,6 +52,46 @@
 
  unlockMouse()
  ```
+---
+
+ # 🛠️ 编译和构建
+
+ 1. 克隆仓库：  
+    ```bash
+    git clone https://github.com/tomh500/lcfg
+    ```
+ 2. 进入项目目录：  
+    ```bash
+    cd lcfg
+    ```
+ 3. 构建项目：
+    - **Windows**：  
+      ```bash
+      .\build.bat
+      ```
+    - **Linux**：  
+      1. 安装 Lua 5.4 开发包：  
+         ```bash
+         sudo apt install liblua5.4-dev
+         ```
+      2. 赋予构建脚本执行权限：  
+         ```bash
+         chmod +x build.sh
+         ```
+      3. 执行构建：  
+         ```bash
+         ./build.sh
+         ```
+
+ 4. 将生成的 `lcfg` 拷贝到 SmartActive 目录  
+ 5. 使用以下命令编译 Lua 脚本：
+    ```bash
+    lcfg <your_script.lua>
+    ```
+    或生成 Bunnyhop 配置文件：
+    ```bash
+    lcfg -buildbhop
+    ```
 
  ---
 
