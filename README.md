@@ -58,7 +58,7 @@
  cd lcfg
  ```
 
- 3. Build the project (Windows):
+ 3. Build the project (x64 Native Tools Command Prompt for VS 2022):
  ```bash
  .\build.bat
  ```
