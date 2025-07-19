@@ -20,6 +20,7 @@
 
  基于 Lua 语法，你可以使用以下由 lcfg 定义的函数：
 
+ * `LCFG_VERSION(int)`：假定lcfg lua函数语法版本，必须在lua文件第一行显式声明`
  * `<basecmd>(number)`：执行基本动作，如移动或攻击，等价于 CFG 中的 `basecmd x 0 0`  
  * `jump()`：跳跃动作  
  * `sleep(ticks)`：延迟执行，单位为 ticks  
@@ -37,6 +38,7 @@
  ## 📄 Lua 示例
 
  ```lua
+ LCFG_VERSION(1)
  setExecPath("cfg/autoexec.cfg")
 
  lockMouse()
@@ -53,70 +55,6 @@
 
  ---
 
- # 🛠️ 编译和构建
-
- 1. 克隆仓库：  
-    ```bash
-    git clone https://github.com/tomh500/lcfg
-    ```
- 2. 进入项目目录：  
-    ```bash
-    cd lcfg
-    ```
- 3. 构建项目：
-    - **Windows**：  
-      ```bash
-      .\build.bat
-      ```
-    - **Linux**：  
-      1. 安装 Lua 5.4 开发包：  
-         ```bash
-         sudo apt install liblua5.4-dev
-         ```
-      2. 赋予构建脚本执行权限：  
-         ```bash
-         chmod +x build.sh
-         ```
-      3. 执行构建：  
-         ```bash
-         ./build.sh
-         ```
-
- 4. 将生成的 `lcfg` 拷贝到 SmartActive 目录  
- 5. 使用以下命令编译 Lua 脚本：
-    ```bash
-    lcfg <your_script.lua>
-    ```
-    或生成 Bunnyhop 配置文件：
-    ```bash
-    lcfg -buildbhop
-    ```
-
- ---
-
- # 📦 使用说明
-
- 1. 将 `lcfg` 和 `lua54.dll` 放在脚本同目录，或添加到系统环境变量中  
- 2. （Linux 用户）赋予 `lcfg` 执行权限：  
-    ```bash
-    chmod +x lcfg
-    ```
- 3. 执行编译命令：  
-    ```bash
-    lcfg <your_script.lua>
-    ```
-    或生成 SmartActive Bunnyhop 文件：  
-    ```bash
-    lcfg -buildbhop
-    ```
- 4. 运行后将获得包含若干 `_init_.cfg` 文件的文件夹。将该文件夹与 <a href="https://github.com/tomh500/MoClient">DearMoments</a> 配合使用。在 CS2 控制台运行：
-
-    ```cfg
-    exec <path_to/_init_.cfg>
-    sf_start
-    ```
-
- ---
 
  ## 📜 许可协议
 
