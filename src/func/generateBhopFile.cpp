@@ -1,5 +1,16 @@
 
-#include<bits/stdc++.h>
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+#include <string>
+#include <vector>
+#include <map>
+#include <regex>
+#include <chrono>
+#include <filesystem>
+
 
 int generateBhopFile() {
     const std::string filename = "_init_.cfg";
