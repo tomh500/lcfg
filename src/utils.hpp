@@ -1,7 +1,17 @@
 #ifndef lcfg_UTILS
 #define lcfg_UTILS
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+#include <string>
+#include <vector>
+#include <map>
+#include <regex>
+#include <chrono>
+#include <filesystem>
+#include <cmath>
 #include <format>
 #include <lua.hpp>
 #include "include/argh.h"
@@ -44,7 +54,7 @@ const size_t LINELIMIT = 300;
 const double max_yaw_speed = 300;
 const double max_pitch_speed = 45;
 
-lua_State *luaL;
+extern lua_State* luaL;
 
 string genList(const string &name, const vector<string> &ls)
 {

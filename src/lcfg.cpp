@@ -11,6 +11,16 @@
 #include "utils.hpp"
 #include "include/Global.h"
 
+lua_State* luaL;
+
+int LCFG_VERSION(lua_State* L) {
+    int version = luaL_checkinteger(L, 1);
+    lua_pushboolean(L, true);
+    lua_setglobal(L, "_LCFG_VER_CHECKED");
+    return 0;
+}
+
+
 void registerLuaFunctions(lua_State *L)
 {
     registerLuaBaseFunctions(L);
@@ -23,6 +33,8 @@ void registerLuaFunctions(lua_State *L)
     registerLuaBaseInstantFunctions(L);
     registerLuaBoostFunction(L);
     registerLuaMiscFunction(L);
+    lua_register(L, "LCFG_VERSION", LCFG_VERSION);
+
 }
 
 void warning_func(void *ud, const char *msg, int tocont)
@@ -36,7 +48,7 @@ void warning_func(void *ud, const char *msg, int tocont)
 int main(int argc, char *argv[])
 {
     #ifdef _WIN32
-    system("chcp 65001");
+    system("chcp 65001>nul");
     #endif 
     ARG::init(argc,argv);
 
