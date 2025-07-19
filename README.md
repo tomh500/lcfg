@@ -72,19 +72,6 @@
       ```bash
       .\build.bat
       ```
-    - **Linux**:  
-      1. Install Lua 5.4 development headers:  
-         ```bash
-         sudo apt install liblua5.4-dev
-         ```
-      2. Make the build script executable:  
-         ```bash
-         chmod +x build.sh
-         ```
-      3. Run build:  
-         ```bash
-         ./build.sh
-         ```
 
  4. Copy the `lcfg` binary to your SmartActive folder  
  5. Compile Lua scripts:
@@ -98,29 +85,6 @@
 
  ---
 
- # 📦 How to Use
-
- 1. Place `lcfg` and `lua54.dll` in the same directory as your script, or add them to your system's environment variables  
- 2. (Linux only) Make `lcfg` executable:  
-    ```bash
-    chmod +x lcfg
-    ```
- 3. Run the compiler:  
-    ```bash
-    lcfg <your_script.lua>
-    ```
-    Or generate SmartActive bunnyhop config:
-    ```bash
-    lcfg -buildbhop
-    ```
- 4. You’ll get a folder with `_init_.cfg` files. Use them with <a href="https://github.com/tomh500/MoClient">DearMoments</a>. In CS2 console, run:
-
-    ```cfg
-    exec <path_to/_init_.cfg>
-    sf_start
-    ```
-
- ---
 
  ## 📜 License
 
