@@ -50,7 +50,7 @@
 
  1. Clone the repository:
  ```bash
- git clone https:github.com/tomh500/lcfg
+ git clone https://github.com/tomh500/lcfg
  ```
 
  2. Navigate to the project folder:
