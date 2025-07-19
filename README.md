@@ -1,4 +1,4 @@
- [简体中文](README_CN.md) | [English](#) 
+[English](#) | [简体中文](README_CN.md) 
  
  # 🎯 Project Overview
  lcfg is a lightweight compiler designed to translate Lua scripts into CFG files compatible with CS2.
@@ -60,7 +60,7 @@
 
  3. Build the project (x64 Native Tools Command Prompt for VS 2022):
  ```bash
- .\build.bat
+ build.bat
  ```
 
  4. Copy the generated `lcfg.exe` into your SmartActive directory
