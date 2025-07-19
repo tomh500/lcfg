@@ -69,21 +69,9 @@
       ```bash
       .\build.bat
       ```
-    - **Linux**：  
-      1. 安装 Lua 5.4 开发包：  
-         ```bash
-         sudo apt install liblua5.4-dev
-         ```
-      2. 赋予构建脚本执行权限：  
-         ```bash
-         chmod +x build.sh
-         ```
-      3. 执行构建：  
-         ```bash
-         ./build.sh
-         ```
 
  4. 将生成的 `lcfg` 拷贝到 SmartActive 目录  
+
  5. 使用以下命令编译 Lua 脚本：
     ```bash
     lcfg <your_script.lua>
@@ -91,6 +79,12 @@
     或生成 Bunnyhop 配置文件：
     ```bash
     lcfg -buildbhop
+    ```
+
+ 6. 运行后将获得包含若干 `_init_.cfg` 文件的文件夹。将该文件夹与 <a href="https://github.com/tomh500/DearMoments">DearMoments</a> 配合使用。在 CS2 控制台运行：
+
+    ```cfg
+    exec <path_to/_init_.cfg>;sf_start
     ```
 
  ---
