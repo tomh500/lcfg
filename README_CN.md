@@ -20,7 +20,7 @@
 
  基于 Lua 语法，你可以使用以下由 lcfg 定义的函数：
 
- * `LCFG_VERSION(int)`：假定lcfg lua函数语法版本，必须在lua文件第一行显式声明`
+ * `LCFG_VERSION(int)`：假定lcfg lua函数语法版本，必须在lua文件第一行显式声明
  * `<basecmd>(number)`：执行基本动作，如移动或攻击，等价于 CFG 中的 `basecmd x 0 0`  
  * `jump()`：跳跃动作  
  * `sleep(ticks)`：延迟执行，单位为 ticks  
