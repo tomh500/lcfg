@@ -3,21 +3,32 @@ name: Build LCFG on Windows
 on:
   push:
     branches: [ main ]
+    paths:
+      - '**/*.cpp'
+      - '**/*.hpp'
+      - '**/*.h'
+      - 'build.bat'
   pull_request:
     branches: [ main ]
-  workflow_dispatch: 
+    paths:
+      - '**/*.cpp'
+      - '**/*.hpp'
+      - '**/*.h'
+      - 'build.bat'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup MSVC environment
-        uses: ilammy/msvc-dev-cmd@v1 
+        uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Compile lcfg.exe
+      - name: Compile lcfg.exe with your build.bat
         shell: cmd
         run: build.bat
 
