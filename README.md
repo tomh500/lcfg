@@ -1,5 +1,6 @@
+ [简体中文](README_CN.md) | [English](#) 
+ 
  # 🎯 Project Overview
- [简体中文SimpledChinese](README_CN.md).  
  lcfg is a lightweight compiler designed to translate Lua scripts into CFG files compatible with CS2.
  It extends standard Lua syntax with custom commands for gameplay automation.
 
