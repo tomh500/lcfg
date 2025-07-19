@@ -65,7 +65,7 @@
     cd lcfg
     ```
  3. 构建项目：
-    - **Windows**：  
+    - **x64 Native Tools Command Prompt for VS 2022**：  
       ```bash
       .\build.bat
       ```
