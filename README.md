@@ -76,7 +76,7 @@
  ```
 
  6. After running, you’ll get a folder containing `_init_.cfg`.  
- Use it with [DearMoments](https:github.com/tomh500/DearMoments).  
+ Use it with [DearMoments](https://github.com/tomh500/DearMoments).  
  In CS2 console, run:
  ```cfg
  exec <path_to/_init_.cfg>;sf_start
