@@ -10,6 +10,7 @@
 #include "cmd/misc/miscCommand.hpp"
 #include "utils.hpp"
 #include "include/Global.h"
+#include "include/lcpp.h"
 
 lua_State* luaL;
 int g_lcfgVersion = 1; 
@@ -54,7 +55,15 @@ int main(int argc, char *argv[])
     system("chcp 65001>nul");
     #endif 
     ARG::init(argc,argv);
-
+if (ARG::cmdl["-lcpp"]) {
+        if (ARG::cmdl.pos_args().size() < 2) {
+            std::cerr << "Usage: lcfg.exe -lcpp <filepath>" << std::endl;
+            return 1;
+        }
+        // 调用你的 lcpp::run
+        return lcpp::run(argc, argv);
+    }
+    else{
     string scriptPath = ARG::cmdl[1];
     
     log("lcfg is running.");
@@ -104,5 +113,6 @@ int main(int argc, char *argv[])
     FlagDevicesWithReg();
     // 清理
     lua_close(L);
+}
     return 0;
 }
