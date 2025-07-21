@@ -61,7 +61,7 @@ if (ARG::cmdl["-lcpp"]) {
             return 1;
         }
         // 调用你的 lcpp::run
-        return lcpp::run(argc, argv);
+       return lcpp::run(argc, argv);
     }
     else{
     string scriptPath = ARG::cmdl[1];
