@@ -82,6 +82,10 @@
  exec <path_to/_init_.cfg>;sf_start
  ```
 
+  # 🔪 LCPP Support
+  If you need to compile lcpp files (with gun follow), you need to use the -lcpp parameter to enable lcpp support. The usage is as follows.
+ `lcfg <filename> -lcpp`
+
 
  # 📜 License
  Distributed under [GPL v3.0](https:www.gnu.org/licenses/gpl-3.0.html)
