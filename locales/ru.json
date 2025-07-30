@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "language": "Русский",
+    "code": "ru",
+    "version": "1.0.0"
+  },
+  "errors": {
+    "lua_state_failed": "Не удалось создать состояние Lua",
+    "script_execution_error": "Ошибка выполнения скрипта: {0}",
+    "file_not_found": "Файл не найден: {0}",
+    "invalid_language": "Указан неверный язык: {0}",
+    "translation_file_not_found": "Файл перевода не найден: {0}",
+    "invalid_json_format": "Неверный формат JSON в файле перевода: {0}"
+  },
+  "logs": {
+    "scfg_running": "scfg запущен",
+    "workspace_info": "рабочая директория: {0}",
+    "ok_process": "успешная обработка scfg файла. завершено на тике={0}",
+    "receive_command": "получена команда {0}({1})",
+    "language_set": "Установлен язык: {0}",
+    "generating_cfg": "Генерация CFG файлов...",
+    "cleanup_complete": "Очистка завершена"
+  },
+  "cli": {
+    "usage": "Использование: scfg <путь_к_скрипту>",
+    "help_description": "Показать это сообщение помощи",
+    "language_help": "Установить язык (en|ru)"
+  },
+  "warnings": {
+    "exec_path_not_set": "путь exec не установлен! Вы уверены?"
+  }
+}

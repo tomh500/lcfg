@@ -5,6 +5,7 @@
 #include <format>
 #include <lua.hpp>
 #include "include/argh.h"
+#include "localization/LocalizationManager.hpp"
 using namespace std;
 namespace fs = filesystem;
 
@@ -88,12 +89,31 @@ namespace ARG
     argh::parser cmdl;
     void outUsage()
     {
-        cout << "Usage: scfg <your_script_file_here>";
+        auto& loc = scfg::localization::LocalizationManager::getInstance();
+        cout << loc.getText("cli.usage") << endl;
+        cout << "  --lang <en|ru>  " << loc.getText("cli.language_help") << endl;
+        cout << "  -h, -help       " << loc.getText("cli.help_description") << endl;
         exit(0);
     }
     void init(int argc, char *argv[])
     {
         cmdl = argh::parser(argc, argv);
+        
+        // Инициализация локализации
+        auto& loc = scfg::localization::LocalizationManager::getInstance();
+        
+        // Установка языка из параметров
+        std::string lang = "en";
+        if (cmdl("--lang")) {
+            cmdl("--lang") >> lang;
+            try {
+                loc.setLanguage(lang);
+            } catch (const scfg::localization::LocalizationException& e) {
+                std::cerr << loc.getText("errors.invalid_language", {lang}) << std::endl;
+                exit(1);
+            }
+        }
+        
         if (cmdl.pos_args().size() == 1)
             outUsage();
         if (cmdl[{"-h", "-help"}])
@@ -261,8 +281,10 @@ public:
     }
     void generate(fs::path workspace, lua_State *L)
     {
-        if (!execpath_set)
-            lua_warning(L, "exec path has not been set! Are you sure?", 0);
+        if (!execpath_set) {
+            auto& loc = scfg::localization::LocalizationManager::getInstance();
+            lua_warning(L, loc.getText("warnings.exec_path_not_set").c_str(), 0);
+        }
         gen.init(workspace, execpath);
         int idN = 0;
 
