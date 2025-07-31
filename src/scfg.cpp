@@ -9,6 +9,7 @@
 #include "cmd/boost/boostCommand.hpp"
 #include "cmd/misc/miscCommand.hpp"
 #include "utils.hpp"
+#include "localization/LocalizationManager.cpp"
 
 void registerLuaFunctions(lua_State *L)
 {
