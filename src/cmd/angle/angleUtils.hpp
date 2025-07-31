@@ -15,6 +15,7 @@ namespace ANGLE
     {
         event.pushEvent(lcfgProxy::REC_SENS);
     }
+/* 旧版本 7.31更新
     void resetAngle()
     {
         event.pushEvent("yaw 99999999999999999 1 1");
@@ -22,6 +23,17 @@ namespace ANGLE
         useStdSensitivity();
         lst_yaw = 0, lst_pitch = 0;
     }
+*/
+    void resetAngle()
+    {
+        event.pushEvent("m_yaw 9999999999999999");
+        event.pushEvent("m_pitch 0.022");
+        event.pushEvent("sensitivity 2.2");
+        event.pushEvent("yaw 32767 1 0");
+        event.pushEvent("pitch 1800 0 0");
+        lst_yaw = 0, lst_pitch = 89;
+    }
+
     void relativeAngle(double yaw, double pitch)
     {
         event.pushEvent(format("yaw {:6f} 1 1", (double)(lst_yaw - yaw) / (sensitivity * m_yaw)));
