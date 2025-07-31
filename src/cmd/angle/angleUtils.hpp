@@ -17,10 +17,12 @@ namespace ANGLE
     }
     void resetAngle()
     {
-        event.pushEvent("yaw 99999999999999999 1 1");
-        event.pushEvent("pitch 99999999999999999 1 1");
-        useStdSensitivity();
-        lst_yaw = 0, lst_pitch = 0;
+        event.pushEvent("m_yaw 9999999999999999");
+        event.pushEvent("m_pitch 0.022");
+        event.pushEvent("sensitivity 2.2");
+        event.pushEvent("yaw 32767 1 0");
+        event.pushEvent("pitch 1800 0 0");
+        lst_yaw = 0, lst_pitch = 89;
     }
     void relativeAngle(double yaw, double pitch)
     {
