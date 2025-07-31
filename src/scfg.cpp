@@ -38,7 +38,8 @@ int main(int argc, char *argv[])
 
     string scriptPath = ARG::cmdl[1];
     
-    log("scfg is running.");
+    auto& loc = scfg::localization::LocalizationManager::getInstance();
+    log(loc.getText("logs.scfg_running"));
 
     // 创建新的 Lua 状态
     lua_State *L = luaL_newstate();
@@ -47,7 +48,7 @@ int main(int argc, char *argv[])
 
     if (L == nullptr)
     {
-        cerr << "Failed to create Lua state." << endl;
+        cerr << loc.getText("errors.lua_state_failed") << endl;
         return 1;
     }
 
@@ -60,14 +61,14 @@ int main(int argc, char *argv[])
     // 执行 Lua 脚本
     if (luaL_dofile(L, scriptPath.c_str()) != LUA_OK)
     {
-        cerr << "Error executing script: " << lua_tostring(L, -1) << endl;
+        cerr << loc.getText("errors.script_execution_error", {lua_tostring(L, -1)}) << endl;
         lua_pop(L, 1); // 移除错误消息
         lua_close(L);
         return 1;
     }
 
     // check
-    log(format("ok process scfg file. end with current tick={}.", event.time()));
+    log(loc.getText("logs.ok_process", {std::to_string(event.time())}));
 
     // generate
     event.generate(fs::current_path() / fs::path(argv[1]).stem(), L);

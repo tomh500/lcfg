@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "language": "English",
+    "code": "en",
+    "version": "1.0.0"
+  },
+  "errors": {
+    "lua_state_failed": "Failed to create Lua state",
+    "script_execution_error": "Error executing script: {0}",
+    "file_not_found": "File not found: {0}",
+    "invalid_language": "Invalid language specified: {0}",
+    "translation_file_not_found": "Translation file not found: {0}",
+    "invalid_json_format": "Invalid JSON format in translation file: {0}"
+  },
+  "logs": {
+    "scfg_running": "scfg is running",
+    "workspace_info": "workspace: {0}",
+    "ok_process": "ok process scfg file. end with current tick={0}",
+    "receive_command": "receive {0}({1})",
+    "language_set": "Language set to: {0}",
+    "generating_cfg": "Generating CFG files...",
+    "cleanup_complete": "Cleanup complete"
+  },
+  "cli": {
+    "usage": "Usage: scfg <your_script_file_here>",
+    "help_description": "Show this help message",
+    "language_help": "Set language (en|ru)"
+  },
+  "warnings": {
+    "exec_path_not_set": "exec path has not been set! Are you sure?"
+  }
+}
